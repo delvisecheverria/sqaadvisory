@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,1150 +7,359 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
-    :root {
-      --bg: #050508;
-      --bg2: #0c0c14;
-      --bg3: #12121e;
-      --cyan: #00e5ff;
-      --purple: #a855f7;
-      --green: #22d3a0;
-      --orange: #f97316;
-      --pink: #ec4899;
-      --text: #e2e8f0;
-      --muted: #64748b;
-      --border: rgba(255,255,255,0.07);
-      --glass: rgba(255,255,255,0.04);
-      --radius: 16px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ─── CANVAS BACKGROUND ─── */
-    #particle-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 20px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      backdrop-filter: blur(20px);
-      background: rgba(5,5,8,0.7);
-      border-bottom: 1px solid var(--border);
-      transition: all 0.3s;
-    }
-    nav.scrolled {
-      padding: 14px 5%;
-      background: rgba(5,5,8,0.92);
-    }
-    .logo img {
-      height: 36px;
-      width: auto;
-      display: block;
-      filter: brightness(0) invert(1);
-    }
-    .logo img.logo-color {
-      filter: none;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      padding: 10px 22px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      border: none;
-      border-radius: 50px;
-      color: #000;
-      font-weight: 700;
-      font-size: 0.875rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    /* ─── SECTIONS WRAPPER ─── */
-    section { position: relative; z-index: 1; }
-
-    /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 5% 80px;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 16px;
-      border: 1px solid rgba(0,229,255,0.3);
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--cyan);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      background: rgba(0,229,255,0.05);
-    }
-    .hero-badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--cyan);
-      border-radius: 50%;
-      animation: pulse-dot 2s infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-    h1 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -3px;
-      margin-bottom: 28px;
-    }
-    h1 .line1 { display: block; color: var(--text); }
-    h1 .line2 {
-      display: block;
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      max-width: 580px;
-      font-size: 1.125rem;
-      line-height: 1.75;
-      color: var(--muted);
-      margin-bottom: 44px;
-    }
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .btn-primary {
-      padding: 14px 32px;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      border: none;
-      border-radius: 50px;
-      color: #000;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 0 30px rgba(0,229,255,0.3);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 50px rgba(0,229,255,0.45);
-    }
-    .btn-ghost {
-      padding: 14px 32px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .btn-ghost:hover {
-      border-color: rgba(255,255,255,0.25);
-      background: var(--glass);
-    }
-    .hero-stats {
-      display: flex;
-      gap: 48px;
-      margin-top: 72px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .stat {
-      text-align: center;
-    }
-    .stat-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.25rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--cyan), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, var(--cyan), transparent);
-      animation: scroll-anim 2s infinite;
-    }
-    @keyframes scroll-anim {
-      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
-      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
-    }
-
-    /* ─── SECTION HEADERS ─── */
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.25rem);
-      font-weight: 800;
-      letter-spacing: -1.5px;
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-    .section-desc {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.75;
-      max-width: 520px;
-    }
-
-    /* ─── PRINCIPLES ─── */
-    #principles {
-      padding: 120px 5%;
-    }
-    .principles-header { margin-bottom: 72px; }
-    .principles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-    .principle-card {
-      position: relative;
-      padding: 40px 36px;
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
-      cursor: default;
-    }
-    .principle-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 20%, var(--card-color) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .principle-card:hover { transform: translateY(-6px); border-color: var(--card-color); }
-    .principle-card:hover::before { opacity: 0.08; }
-    .principle-card[data-color="cyan"] { --card-color: var(--cyan); }
-    .principle-card[data-color="purple"] { --card-color: var(--purple); }
-    .principle-card[data-color="orange"] { --card-color: var(--orange); }
-    .principle-card[data-color="green"] { --card-color: var(--green); }
-    .principle-icon {
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 24px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-    }
-    .principle-number {
-      position: absolute;
-      top: 32px; right: 32px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 4rem;
-      font-weight: 900;
-      color: var(--card-color);
-      opacity: 0.07;
-      line-height: 1;
-    }
-    .principle-tag {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--card-color);
-      margin-bottom: 8px;
-    }
-    .principle-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-    }
-    .principle-desc {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-
-    /* ─── SERVICES ─── */
-    #services {
-      padding: 120px 5%;
-      background: var(--bg2);
-    }
-    .services-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .services-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 48px;
-    }
-    .service-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--glass);
-      transition: border-color 0.3s, transform 0.3s;
-      cursor: default;
-    }
-    .service-item:hover {
-      border-color: rgba(0,229,255,0.25);
-      transform: translateX(6px);
-    }
-    .service-icon {
-      width: 44px; height: 44px;
-      flex-shrink: 0;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      background: var(--glass);
-      border: 1px solid var(--border);
-    }
-    .service-name {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 4px;
-    }
-    .service-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .service-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .tag {
-      padding: 3px 10px;
-      background: var(--glass);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .services-visual {
-      position: sticky;
-      top: 120px;
-    }
-    .visual-card {
-      border-radius: 24px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      padding: 36px;
-      overflow: hidden;
-    }
-    .vc-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 28px;
-    }
-    .vc-dot { width: 12px; height: 12px; border-radius: 50%; }
-    .vc-dot:nth-child(1) { background: #ff5f57; }
-    .vc-dot:nth-child(2) { background: #febc2e; }
-    .vc-dot:nth-child(3) { background: #28c840; }
-    .code-block {
-      font-family: 'Courier New', monospace;
-      font-size: 0.82rem;
-      line-height: 1.8;
-    }
-    .cb-comment { color: #4a5568; }
-    .cb-keyword { color: var(--purple); }
-    .cb-fn { color: var(--cyan); }
-    .cb-string { color: var(--green); }
-    .cb-number { color: var(--orange); }
-    .cb-cursor {
-      display: inline-block;
-      width: 2px; height: 1em;
-      background: var(--cyan);
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-    .test-pass {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-    .test-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 0;
-      font-size: 0.82rem;
-    }
-    .test-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .pass { background: var(--green); box-shadow: 0 0 8px var(--green); }
-    .fail { background: #f87171; box-shadow: 0 0 8px #f87171; }
-    .running {
-      background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
-      animation: pulse-dot 1s infinite;
-    }
-    .test-name { color: var(--muted); flex: 1; }
-    .test-time { color: #475569; font-size: 0.75rem; }
-
-    /* ─── TRAINING ─── */
-    #training {
-      padding: 120px 5%;
-    }
-    .training-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 60px;
-    }
-    .training-card {
-      position: relative;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--glass);
-      padding: 40px 36px;
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .training-card:hover { transform: translateY(-6px); }
-    .training-card.featured {
-      border-color: rgba(168,85,247,0.4);
-      background: linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,229,255,0.04));
-    }
-    .featured-badge {
-      position: absolute;
-      top: 20px; right: 20px;
-      padding: 4px 12px;
-      background: linear-gradient(135deg, var(--purple), var(--cyan));
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.5px;
-    }
-    .training-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-    .training-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      letter-spacing: -0.3px;
-    }
-    .training-desc {
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.7;
-    }
-    .training-highlights {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .highlight-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-    .highlight-item::before {
-      content: '→';
-      color: var(--cyan);
-      font-weight: 700;
-    }
-
-    /* ─── PTU SECTION ─── */
-    #ptu {
-      padding: 120px 5%;
-      background: var(--bg2);
-    }
-    .ptu-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .ptu-badge-big {
-      display: inline-block;
-      padding: 8px 20px;
-      background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(168,85,247,0.15));
-      border: 1px solid rgba(249,115,22,0.3);
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--orange);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    .ptu-visual {
-      position: relative;
-    }
-    .ptu-cert-card {
-      background: linear-gradient(135deg, var(--bg3), #1a0e2e);
-      border: 1px solid rgba(168,85,247,0.3);
-      border-radius: 24px;
-      padding: 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .ptu-cert-card::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 60%);
-    }
-    .ptu-logo-text {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--orange), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -1px;
-      margin-bottom: 8px;
-    }
-    .ptu-sub-text {
-      font-size: 0.85rem;
-      color: var(--muted);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-    }
-    .ptu-ribbon {
-      display: inline-block;
-      padding: 6px 18px;
-      background: linear-gradient(135deg, var(--orange), var(--pink));
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 28px;
-    }
-    .ptu-stars {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      font-size: 1.2rem;
-    }
-    .ptu-features {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-top: 40px;
-    }
-    .ptu-feature {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .ptu-feature-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      background: rgba(249,115,22,0.1);
-      border: 1px solid rgba(249,115,22,0.2);
-      flex-shrink: 0;
-    }
-    .ptu-feature-text h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-    .ptu-feature-text p {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* ─── TOOLS ─── */
-    #tools {
-      padding: 120px 5%;
-    }
-    .tools-cats {
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-      margin-top: 60px;
-    }
-    .tool-category {}
-    .tool-cat-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .tool-cat-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .tools-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .tool-pill {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 20px;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      background: var(--glass);
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: border-color 0.2s, background 0.2s, transform 0.2s;
-      cursor: default;
-    }
-    .tool-pill:hover {
-      transform: translateY(-3px);
-      background: rgba(255,255,255,0.07);
-      border-color: rgba(255,255,255,0.15);
-    }
-    .tool-pill .tool-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ─── TRUSTED BY / CAROUSEL ─── */
-    #trusted {
-      padding: 120px 5%;
-      background: var(--bg2);
-      text-align: center;
-    }
-    .carousel-wrapper {
-      overflow: hidden;
-      margin-top: 56px;
-      position: relative;
-    }
-    .carousel-wrapper::before,
-    .carousel-wrapper::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-    }
-    .carousel-wrapper::before {
-      left: 0;
-      background: linear-gradient(to right, var(--bg2), transparent);
-    }
-    .carousel-wrapper::after {
-      right: 0;
-      background: linear-gradient(to left, var(--bg2), transparent);
-    }
-    .carousel-track {
-      display: flex;
-      gap: 32px;
-      width: max-content;
-      animation: carousel-scroll 28s linear infinite;
-    }
-    .carousel-track:hover { animation-play-state: paused; }
-    @keyframes carousel-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .client-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 36px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--glass);
-      min-width: 180px;
-      height: 70px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--muted);
-      letter-spacing: -0.3px;
-      white-space: nowrap;
-      transition: border-color 0.3s, color 0.3s;
-    }
-    .client-card:hover {
-      border-color: rgba(0,229,255,0.25);
-      color: var(--text);
-    }
-
-    /* ─── CTA SECTION ─── */
-    #cta {
-      padding: 140px 5%;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-glow {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse, rgba(168,85,247,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
-    .cta-desc {
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 480px;
-      margin: 0 auto 40px;
-      line-height: 1.75;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 48px 5%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .footer-logo img {
-      height: 28px;
-      width: auto;
-      filter: brightness(0) invert(1);
-      opacity: 0.7;
-    }
-    .footer-copy {
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-    .footer-links {
-      display: flex;
-      gap: 24px;
-    }
-    .footer-links a {
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--text); }
-
-    /* ─── SCROLL REVEAL ─── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 900px) {
-      .services-inner, .ptu-inner { grid-template-columns: 1fr; gap: 48px; }
-      .services-visual { position: static; }
-      .nav-links { display: none; }
-    }
-    @media (max-width: 600px) {
-      h1 { letter-spacing: -1.5px; }
-      .hero-stats { gap: 28px; }
-      footer { flex-direction: column; text-align: center; }
-    }
+    :root{--bg:#050508;--bg2:#0c0c14;--bg3:#12121e;--cyan:#00e5ff;--purple:#a855f7;--green:#22d3a0;--orange:#f97316;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;--border:rgba(255,255,255,0.07);--glass:rgba(255,255,255,0.04);--radius:16px}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    #particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.4}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 5%;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px);background:rgba(5,5,8,0.7);border-bottom:1px solid var(--border);transition:all 0.3s}
+    nav.scrolled{padding:14px 5%;background:rgba(5,5,8,0.92)}
+    .logo img{height:36px;width:auto;display:block}
+    .nav-links{display:flex;gap:32px;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{padding:10px 22px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:50px;color:#000;font-weight:700;font-size:0.875rem;cursor:pointer;text-decoration:none;transition:opacity 0.2s,transform 0.2s}
+    .nav-cta:hover{opacity:0.85;transform:translateY(-1px)}
+    section{position:relative;z-index:1}
+    #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 5% 80px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid rgba(0,229,255,0.3);border-radius:50px;font-size:0.78rem;font-weight:600;color:var(--cyan);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:28px;background:rgba(0,229,255,0.05)}
+    .hero-badge::before{content:'';width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:pulse-dot 2s infinite}
+    @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+    h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,8vw,7rem);font-weight:800;line-height:1.0;letter-spacing:-3px;margin-bottom:28px}
+    h1 .line1{display:block;color:var(--text)}
+    h1 .line2{display:block;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{max-width:580px;font-size:1.125rem;line-height:1.75;color:var(--muted);margin-bottom:44px}
+    .hero-buttons{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .btn-primary{padding:14px 32px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:50px;color:#000;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 0 30px rgba(0,229,255,0.3)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,229,255,0.45)}
+    .btn-ghost{padding:14px 32px;background:transparent;border:1px solid var(--border);border-radius:50px;color:var(--text);font-weight:600;font-size:1rem;cursor:pointer;text-decoration:none;transition:border-color 0.2s,background 0.2s}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.25);background:var(--glass)}
+    .hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase}
+    .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:scroll-anim 2s infinite}
+    @keyframes scroll-anim{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}100%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+    .section-label{font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+    .section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3.25rem);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+    .section-desc{color:var(--muted);font-size:1rem;line-height:1.75;max-width:520px}
+    #principles{padding:120px 5%}
+    .principles-header{margin-bottom:72px}
+    .principles-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+    .principle-card{position:relative;padding:40px 36px;background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform 0.3s,border-color 0.3s;cursor:default}
+    .principle-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,var(--card-color) 0%,transparent 60%);opacity:0;transition:opacity 0.4s}
+    .principle-card:hover{transform:translateY(-6px);border-color:var(--card-color)}
+    .principle-card:hover::before{opacity:0.08}
+    .principle-card[data-color="cyan"]{--card-color:var(--cyan)}
+    .principle-card[data-color="purple"]{--card-color:var(--purple)}
+    .principle-card[data-color="orange"]{--card-color:var(--orange)}
+    .principle-card[data-color="green"]{--card-color:var(--green)}
+    .principle-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--card-color)}
+    .principle-number{position:absolute;top:32px;right:32px;font-family:'Space Grotesk',sans-serif;font-size:4rem;font-weight:900;color:var(--card-color);opacity:0.07;line-height:1}
+    .principle-tag{font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--card-color);margin-bottom:8px}
+    .principle-name{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:12px;letter-spacing:-0.5px}
+    .principle-desc{color:var(--muted);font-size:0.9rem;line-height:1.7}
+    #services{padding:120px 5%;background:var(--bg2)}
+    .services-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+    .services-list{display:flex;flex-direction:column;gap:12px;margin-top:48px}
+    .service-item{display:flex;align-items:flex-start;gap:20px;padding:20px 24px;border:1px solid var(--border);border-radius:var(--radius);background:var(--glass);transition:border-color 0.3s,transform 0.3s,background 0.3s;cursor:pointer}
+    .service-item:hover,.service-item.active{border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.05);transform:translateX(6px)}
+    .service-icon{width:44px;height:44px;flex-shrink:0;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--glass);border:1px solid var(--border);color:var(--cyan)}
+    .service-name{font-weight:700;font-size:1rem;margin-bottom:4px}
+    .service-desc{font-size:0.85rem;color:var(--muted);line-height:1.6}
+    .service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .tag{padding:3px 10px;background:var(--glass);border:1px solid var(--border);border-radius:50px;font-size:0.72rem;color:var(--muted);font-weight:500}
+    .services-visual{position:sticky;top:120px}
+    .visual-card{border-radius:24px;background:var(--bg3);border:1px solid var(--border);overflow:hidden}
+    .vc-header{display:flex;align-items:center;gap:8px;padding:16px 20px;border-bottom:1px solid var(--border)}
+    .vc-dot{width:12px;height:12px;border-radius:50%}
+    .vc-dot:nth-child(1){background:#ff5f57}
+    .vc-dot:nth-child(2){background:#febc2e}
+    .vc-dot:nth-child(3){background:#28c840}
+    .vc-filename{margin-left:8px;font-size:0.78rem;color:var(--muted);font-family:monospace}
+    .code-panel{display:none;padding:28px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.8;overflow-x:auto}
+    .code-panel.active{display:block}
+    .cb-comment{color:#4a5568}.cb-keyword{color:var(--purple)}.cb-fn{color:var(--cyan)}.cb-string{color:var(--green)}.cb-number{color:var(--orange)}.cb-type{color:#f97316}
+    .cb-cursor{display:inline-block;width:2px;height:1em;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:text-bottom}
+    @keyframes blink{50%{opacity:0}}
+    #training{padding:120px 5%}
+    .training-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:60px}
+    .training-card{position:relative;border-radius:var(--radius);border:1px solid var(--border);background:var(--glass);padding:40px 36px;overflow:hidden;transition:transform 0.3s}
+    .training-card:hover{transform:translateY(-6px)}
+    .training-card.featured{border-color:rgba(168,85,247,0.4);background:linear-gradient(135deg,rgba(168,85,247,0.06),rgba(0,229,255,0.04))}
+    .featured-badge{position:absolute;top:20px;right:20px;padding:4px 12px;background:linear-gradient(135deg,var(--purple),var(--cyan));border-radius:50px;font-size:0.7rem;font-weight:700;color:#fff}
+    .training-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan);margin-bottom:20px}
+    .training-title{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px}
+    .training-desc{color:var(--muted);font-size:0.88rem;line-height:1.7}
+    .training-highlights{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+    .highlight-item{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)}
+    .highlight-item::before{content:'→';color:var(--cyan);font-weight:700}
+    #ptu{padding:120px 5%;background:var(--bg2)}
+    .ptu-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .ptu-badge-big{display:inline-block;padding:8px 20px;background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(168,85,247,0.15));border:1px solid rgba(249,115,22,0.3);border-radius:50px;font-size:0.78rem;font-weight:700;letter-spacing:1.5px;color:var(--orange);text-transform:uppercase;margin-bottom:20px}
+    .ptu-cert-card{background:linear-gradient(135deg,var(--bg3),#1a0e2e);border:1px solid rgba(168,85,247,0.3);border-radius:24px;padding:48px;text-align:center;position:relative;overflow:hidden}
+    .ptu-cert-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(168,85,247,0.08) 0%,transparent 60%)}
+    .ptu-logo-text{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;margin-bottom:8px}
+    .ptu-sub-text{font-size:0.85rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
+    .ptu-ribbon{display:inline-block;padding:6px 18px;background:linear-gradient(135deg,var(--orange),var(--pink));border-radius:50px;font-size:0.78rem;font-weight:700;color:#fff;margin-bottom:28px}
+    .ptu-stars{display:flex;justify-content:center;gap:6px;color:var(--orange)}
+    .ptu-features{display:flex;flex-direction:column;gap:16px;margin-top:40px}
+    .ptu-feature{display:flex;gap:16px;align-items:flex-start}
+    .ptu-feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);flex-shrink:0;color:var(--orange)}
+    .ptu-feature-text h4{font-size:0.95rem;font-weight:600;margin-bottom:2px}
+    .ptu-feature-text p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+    #tools{padding:120px 5%}
+    .tools-cats{display:flex;flex-direction:column;gap:48px;margin-top:60px}
+    .tool-cat-label{font-size:0.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;text-align:center}
+    .tools-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+    .tool-pill{display:flex;align-items:center;gap:10px;padding:12px 20px;border:1px solid var(--border);border-radius:50px;background:var(--glass);font-size:0.875rem;font-weight:500;transition:border-color 0.2s,background 0.2s,transform 0.2s;cursor:default}
+    .tool-pill:hover{transform:translateY(-3px);background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15)}
+    .tool-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+    #trusted{padding:120px 5%;background:var(--bg2);text-align:center}
+    .carousel-wrapper{overflow:hidden;margin-top:56px;position:relative}
+    .carousel-wrapper::before,.carousel-wrapper::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2}
+    .carousel-wrapper::before{left:0;background:linear-gradient(to right,var(--bg2),transparent)}
+    .carousel-wrapper::after{right:0;background:linear-gradient(to left,var(--bg2),transparent)}
+    .carousel-track{display:flex;gap:32px;width:max-content;animation:carousel-scroll 32s linear infinite}
+    .carousel-track:hover{animation-play-state:paused}
+    @keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .client-card{display:flex;align-items:center;justify-content:center;padding:16px 32px;border:1px solid var(--border);border-radius:var(--radius);background:#ffffff;min-width:180px;height:80px;transition:border-color 0.3s,box-shadow 0.3s}
+    .client-card:hover{border-color:rgba(0,229,255,0.4);box-shadow:0 0 20px rgba(0,229,255,0.1)}
+    .client-card img{max-height:48px;max-width:150px;object-fit:contain}
+    #cta{padding:140px 5%;text-align:center;position:relative;overflow:hidden}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(168,85,247,0.12) 0%,transparent 70%);pointer-events:none}
+    .cta-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:20px}
+    .cta-desc{color:var(--muted);font-size:1.05rem;max-width:480px;margin:0 auto 40px;line-height:1.75}
+    footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+    .footer-logo img{height:28px;width:auto}
+    .footer-copy{font-size:0.82rem;color:var(--muted)}
+    .footer-links{display:flex;gap:24px}
+    .footer-links a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
+    .footer-links a:hover{color:var(--text)}
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
+    @media(max-width:900px){.services-inner,.ptu-inner{grid-template-columns:1fr;gap:48px}.services-visual{position:static}.nav-links{display:none}}
+    @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}}
   </style>
 </head>
 <body>
-
 <canvas id="particle-canvas"></canvas>
-
-<!-- ─── NAV ─── -->
 <nav id="navbar">
-  <div class="logo">
-    <img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" />
-  </div>
+  <div class="logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <ul class="nav-links">
-    <li><a href="#principles">Principios</a></li>
-    <li><a href="#services">Servicios</a></li>
-    <li><a href="#training">Capacitación</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#training">Training</a></li>
     <li><a href="#ptu">PTU</a></li>
-    <li><a href="#tools">Herramientas</a></li>
-    <li><a href="#trusted">Clientes</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#trusted">Clients</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">Contactar</a>
+  <a href="#cta" class="nav-cta">Contact us</a>
 </nav>
-
-<!-- ─── HERO ─── -->
 <section id="hero">
   <div class="hero-badge">Quality Engineering Consultancy</div>
-  <h1>
-    <span class="line1">Quality is not</span>
-    <span class="line2">optional.</span>
-  </h1>
-  <p class="hero-sub">
-    Transformamos la forma en que los equipos construyen software. Consultoría especializada en QA, Testing Automatizado, Performance y Seguridad.
-  </p>
+  <h1><span class="line1">Quality is not</span><span class="line2">optional.</span></h1>
+  <p class="hero-sub">We transform the way teams build software. Specialized consultancy in QA, Test Automation, Performance and Security.</p>
   <div class="hero-buttons">
-    <a href="#services" class="btn-primary">Explorar Servicios</a>
-    <a href="#cta" class="btn-ghost">Hablar con un experto</a>
+    <a href="#services" class="btn-primary">Explore Services</a>
+    <a href="#cta" class="btn-ghost">Talk to an expert</a>
   </div>
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-number">+50</div>
-      <div class="stat-label">Proyectos</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number">+200</div>
-      <div class="stat-label">Profesionales formados</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number">4</div>
-      <div class="stat-label">Pilares de calidad</div>
-    </div>
-    <div class="stat">
-      <div class="stat-number">#1</div>
-      <div class="stat-label">PTU Certification</div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    Scroll
-    <div class="scroll-line"></div>
-  </div>
+  <div class="hero-scroll">Scroll<div class="scroll-line"></div></div>
 </section>
-
-<!-- ─── PRINCIPLES ─── -->
 <section id="principles">
   <div class="principles-header reveal">
-    <div class="section-label">Nuestros Pilares</div>
-    <h2 class="section-title">Cuatro principios.<br />Un estándar.</h2>
-    <p class="section-desc">Cada proyecto que tomamos está guiado por estos cuatro fundamentos de la calidad de software.</p>
+    <div class="section-label">Our Pillars</div>
+    <h2 class="section-title">Four principles.<br/>One standard.</h2>
+    <p class="section-desc">Every project we take is guided by these four software quality fundamentals.</p>
   </div>
   <div class="principles-grid">
     <div class="principle-card reveal reveal-delay-1" data-color="cyan">
       <div class="principle-number">01</div>
-      <div class="principle-icon">⚙️</div>
-      <div class="principle-tag">Principio I</div>
+      <div class="principle-icon"><i data-lucide="check-circle"></i></div>
+      <div class="principle-tag">Principle I</div>
       <div class="principle-name">Be Functional</div>
-      <p class="principle-desc">Validamos que cada funcionalidad opere exactamente como fue diseñada, desde pruebas manuales exploratorias hasta suites de automatización completas con cobertura de regresión.</p>
+      <p class="principle-desc">We validate that every feature operates exactly as designed, from exploratory manual testing to full automation suites with regression coverage.</p>
     </div>
     <div class="principle-card reveal reveal-delay-2" data-color="purple">
       <div class="principle-number">02</div>
-      <div class="principle-icon">⚡</div>
-      <div class="principle-tag">Principio II</div>
+      <div class="principle-icon"><i data-lucide="zap"></i></div>
+      <div class="principle-tag">Principle II</div>
       <div class="principle-name">Be Fast</div>
-      <p class="principle-desc">El rendimiento no es una opción tardía. Diseñamos y ejecutamos pruebas de performance para garantizar que tu aplicación escale sin comprometer la experiencia de usuario.</p>
+      <p class="principle-desc">Performance is not an afterthought. We design and execute performance tests to ensure your application scales without compromising user experience.</p>
     </div>
     <div class="principle-card reveal reveal-delay-3" data-color="orange">
       <div class="principle-number">03</div>
-      <div class="principle-icon">🛡️</div>
-      <div class="principle-tag">Principio III</div>
+      <div class="principle-icon"><i data-lucide="shield"></i></div>
+      <div class="principle-tag">Principle III</div>
       <div class="principle-name">Be Unbreakable</div>
-      <p class="principle-desc">La seguridad no se prueba al final, se construye desde el inicio. Realizamos análisis de vulnerabilidades, pruebas de penetración y auditorías de seguridad para blindar tu software.</p>
+      <p class="principle-desc">Security is not tested at the end — it is built from the start. We perform vulnerability analysis, penetration testing and security audits to protect your software.</p>
     </div>
     <div class="principle-card reveal reveal-delay-4" data-color="green">
       <div class="principle-number">04</div>
-      <div class="principle-icon">♿</div>
-      <div class="principle-tag">Principio IV</div>
+      <div class="principle-icon"><i data-lucide="eye"></i></div>
+      <div class="principle-tag">Principle IV</div>
       <div class="principle-name">Be Accessible</div>
-      <p class="principle-desc">Software de calidad es software para todos. Aplicamos estándares WCAG para garantizar que tus productos sean inclusivos y accesibles para cada tipo de usuario.</p>
+      <p class="principle-desc">Quality software is software for everyone. We apply WCAG standards to ensure your products are inclusive and accessible to every type of user.</p>
     </div>
   </div>
 </section>
-
-<!-- ─── SERVICES ─── -->
 <section id="services">
   <div class="services-inner">
     <div>
       <div class="reveal">
-        <div class="section-label">Servicios</div>
-        <h2 class="section-title">Lo que hacemos<br />mejor.</h2>
-        <p class="section-desc">Cubrimos el ciclo completo de calidad de software. Desde la estrategia hasta la ejecución.</p>
+        <div class="section-label">Services</div>
+        <h2 class="section-title">What we do best.</h2>
+        <p class="section-desc">We cover the full software quality cycle. Click a service to see it in action.</p>
       </div>
       <div class="services-list">
-        <div class="service-item reveal reveal-delay-1">
-          <div class="service-icon">🔍</div>
-          <div>
-            <div class="service-name">Pruebas Funcionales</div>
-            <div class="service-desc">Testing manual y automatizado, smoke, regresión, integración y end-to-end. Cubrimos cada flujo crítico.</div>
-            <div class="service-tags">
-              <span class="tag">Manual</span>
-              <span class="tag">Automatizado</span>
-              <span class="tag">E2E</span>
-              <span class="tag">Regresión</span>
-            </div>
-          </div>
+        <div class="service-item active reveal reveal-delay-1" data-service="functional">
+          <div class="service-icon"><i data-lucide="search"></i></div>
+          <div><div class="service-name">Functional Testing</div><div class="service-desc">Manual and automated testing, smoke, regression, integration and end-to-end.</div><div class="service-tags"><span class="tag">Manual</span><span class="tag">Automated</span><span class="tag">E2E</span><span class="tag">Regression</span></div></div>
         </div>
-        <div class="service-item reveal reveal-delay-2">
-          <div class="service-icon">📊</div>
-          <div>
-            <div class="service-name">Pruebas de Performance</div>
-            <div class="service-desc">Load testing, stress testing, soak testing y análisis de cuellos de botella para sistemas de alta concurrencia.</div>
-            <div class="service-tags">
-              <span class="tag">Load Testing</span>
-              <span class="tag">Stress Testing</span>
-              <span class="tag">Scalability</span>
-            </div>
-          </div>
+        <div class="service-item reveal reveal-delay-2" data-service="performance">
+          <div class="service-icon"><i data-lucide="activity"></i></div>
+          <div><div class="service-name">Performance Testing</div><div class="service-desc">Load testing, stress testing, soak testing and bottleneck analysis for high-concurrency systems.</div><div class="service-tags"><span class="tag">Load Testing</span><span class="tag">Stress Testing</span><span class="tag">Scalability</span></div></div>
         </div>
-        <div class="service-item reveal reveal-delay-3">
-          <div class="service-icon">🔐</div>
-          <div>
-            <div class="service-name">Pruebas de Seguridad</div>
-            <div class="service-desc">Vulnerability scanning, penetration testing, OWASP Top 10 assessment y análisis de configuración de seguridad.</div>
-            <div class="service-tags">
-              <span class="tag">Pen Testing</span>
-              <span class="tag">OWASP</span>
-              <span class="tag">Vulnerability Scan</span>
-            </div>
-          </div>
+        <div class="service-item reveal reveal-delay-3" data-service="security">
+          <div class="service-icon"><i data-lucide="lock"></i></div>
+          <div><div class="service-name">Security Testing</div><div class="service-desc">Vulnerability scanning, penetration testing, OWASP Top 10 assessment and security configuration analysis.</div><div class="service-tags"><span class="tag">Pen Testing</span><span class="tag">OWASP</span><span class="tag">Vuln Scan</span></div></div>
         </div>
-        <div class="service-item reveal reveal-delay-4">
-          <div class="service-icon">📱</div>
-          <div>
-            <div class="service-name">Automatización Web & Mobile</div>
-            <div class="service-desc">Frameworks de automatización robustos para aplicaciones web y móviles nativas, híbridas y cross-platform.</div>
-            <div class="service-tags">
-              <span class="tag">Web</span>
-              <span class="tag">iOS</span>
-              <span class="tag">Android</span>
-              <span class="tag">Hybrid</span>
-            </div>
-          </div>
+        <div class="service-item reveal reveal-delay-4" data-service="mobile">
+          <div class="service-icon"><i data-lucide="smartphone"></i></div>
+          <div><div class="service-name">Web &amp; Mobile Automation</div><div class="service-desc">Robust automation frameworks for web and native, hybrid, and cross-platform mobile apps.</div><div class="service-tags"><span class="tag">Web</span><span class="tag">iOS</span><span class="tag">Android</span><span class="tag">Hybrid</span></div></div>
+        </div>
+        <div class="service-item reveal reveal-delay-4" data-service="accessibility">
+          <div class="service-icon"><i data-lucide="eye"></i></div>
+          <div><div class="service-name">Accessibility &amp; UX Testing</div><div class="service-desc">WCAG compliance audits, screen reader testing, color contrast analysis and inclusive design validation.</div><div class="service-tags"><span class="tag">WCAG</span><span class="tag">axe</span><span class="tag">UX Audit</span></div></div>
         </div>
       </div>
     </div>
     <div class="services-visual reveal">
       <div class="visual-card">
         <div class="vc-header">
-          <div class="vc-dot"></div>
-          <div class="vc-dot"></div>
-          <div class="vc-dot"></div>
+          <div class="vc-dot"></div><div class="vc-dot"></div><div class="vc-dot"></div>
+          <span class="vc-filename" id="vc-filename">CheckoutTest.java</span>
         </div>
-        <div class="code-block">
-          <span class="cb-comment">// SQAAdvisory — Test Suite</span><br/>
-          <br/>
-          <span class="cb-keyword">describe</span>(<span class="cb-string">'Checkout Flow'</span>, () => {<br/>
-          &nbsp;&nbsp;<span class="cb-keyword">it</span>(<span class="cb-string">'should complete purchase'</span>,<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">async</span> () => {<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">page</span>.<span class="cb-fn">goto</span>(<span class="cb-string">'/checkout'</span>);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">fillForm</span>(testUser);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">submitOrder</span>();<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">expect</span>(status).<span class="cb-fn">toBe</span>(<span class="cb-number">200</span>);<br/>
-          &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
-          });<span class="cb-cursor"></span>
+        <div class="code-panel active" id="panel-functional">
+<span class="cb-comment">// Selenium + Java — Functional Test</span>
+<span class="cb-keyword">@Test</span>
+<span class="cb-keyword">public void</span> <span class="cb-fn">checkoutFlowShouldComplete</span>() {
+  driver.<span class="cb-fn">get</span>(<span class="cb-string">"https://app.example.com/checkout"</span>);
+  <span class="cb-keyword">new</span> <span class="cb-type">WebDriverWait</span>(driver, <span class="cb-number">10</span>)
+    .until(<span class="cb-fn">visibilityOf</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"cart-summary"</span>)));
+  driver.<span class="cb-fn">findElement</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"btn-pay"</span>)).<span class="cb-fn">click</span>();
+  <span class="cb-fn">assertEquals</span>(<span class="cb-string">"Order confirmed!"</span>, msg);
+}<span class="cb-cursor"></span>
         </div>
-        <div class="test-pass">
-          <div class="test-row">
-            <div class="test-dot pass"></div>
-            <div class="test-name">Login flow validation</div>
-            <div class="test-time">142ms</div>
-          </div>
-          <div class="test-row">
-            <div class="test-dot pass"></div>
-            <div class="test-name">Cart add/remove items</div>
-            <div class="test-time">87ms</div>
-          </div>
-          <div class="test-row">
-            <div class="test-dot running"></div>
-            <div class="test-name">Checkout complete purchase</div>
-            <div class="test-time">running…</div>
-          </div>
-          <div class="test-row">
-            <div class="test-dot fail"></div>
-            <div class="test-name">Payment gateway timeout</div>
-            <div class="test-time">5001ms</div>
-          </div>
+        <div class="code-panel" id="panel-performance">
+<span class="cb-comment"># Relampo — Performance Test</span>
+<span class="cb-keyword">scenario</span>: <span class="cb-string">checkout-load-test</span>
+<span class="cb-keyword">config</span>:
+  <span class="cb-keyword">target</span>: <span class="cb-string">https://app.example.com</span>
+  <span class="cb-keyword">duration</span>: <span class="cb-number">300</span>s
+  <span class="cb-keyword">users</span>: <span class="cb-number">500</span>
+  <span class="cb-keyword">ramp_up</span>: <span class="cb-number">60</span>s
+<span class="cb-keyword">steps</span>:
+  - <span class="cb-keyword">name</span>: <span class="cb-string">Checkout</span>
+    <span class="cb-keyword">request</span>: <span class="cb-type">POST</span> /api/orders
+    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">p95</span>: <span class="cb-number">&lt; 800ms</span>}<span class="cb-cursor"></span>
+        </div>
+        <div class="code-panel" id="panel-security">
+<span class="cb-comment"># OWASP ZAP — Active Scan</span>
+<span class="cb-keyword">zap</span>:
+  <span class="cb-keyword">target</span>: <span class="cb-string">https://app.example.com</span>
+  <span class="cb-keyword">scan_type</span>: <span class="cb-string">active</span>
+  <span class="cb-keyword">rules</span>: [<span class="cb-string">sql-injection</span>, <span class="cb-string">xss-reflected</span>, <span class="cb-string">csrf-token-missing</span>]
+  <span class="cb-keyword">report</span>: {<span class="cb-keyword">format</span>: <span class="cb-string">html</span>, <span class="cb-keyword">fail_on</span>: <span class="cb-string">HIGH</span>}<span class="cb-cursor"></span>
+        </div>
+        <div class="code-panel" id="panel-mobile">
+<span class="cb-comment">// Appium + C# — Mobile Test</span>
+[<span class="cb-type">Test</span>]
+<span class="cb-keyword">public async</span> <span class="cb-type">Task</span> <span class="cb-fn">LoginShouldSucceed</span>() {
+  <span class="cb-keyword">var</span> opts = <span class="cb-keyword">new</span> <span class="cb-type">AppiumOptions</span>();
+  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"platformName"</span>, <span class="cb-string">"iOS"</span>);
+  <span class="cb-keyword">var</span> driver = <span class="cb-keyword">new</span> <span class="cb-type">IOSDriver</span>(opts);
+  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"btnLogin"</span>)).<span class="cb-fn">Click</span>();
+  <span class="cb-fn">Assert</span>.<span class="cb-fn">IsTrue</span>(<span class="cb-fn">IsLoggedIn</span>());<span class="cb-cursor"></span>
+}
+        </div>
+        <div class="code-panel" id="panel-accessibility">
+<span class="cb-comment">&lt;!-- axe-core — Accessibility Audit --&gt;</span>
+<span class="cb-keyword">&lt;script&gt;</span>
+  <span class="cb-fn">axe</span>.<span class="cb-fn">run</span>(document, {
+    <span class="cb-keyword">runOnly</span>: [<span class="cb-string">'wcag2a'</span>, <span class="cb-string">'wcag2aa'</span>]
+  }).<span class="cb-fn">then</span>(results =&gt; {
+    results.violations.<span class="cb-fn">forEach</span>(v =&gt;
+      console.<span class="cb-fn">error</span>(<span class="cb-string">`[${v.impact}]`</span>, v.description));
+  });
+<span class="cb-keyword">&lt;/script&gt;</span><span class="cb-cursor"></span>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ─── TRAINING ─── -->
 <section id="training">
-  <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
-    <div class="section-label">Capacitación</div>
-    <h2 class="section-title">Formamos a los mejores testers.</h2>
-    <p class="section-desc" style="margin:0 auto;">Programas de entrenamiento diseñados para llevar a tus equipos al siguiente nivel en calidad de software.</p>
+  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
+    <div class="section-label">Training</div>
+    <h2 class="section-title">We train the best testers.</h2>
+    <p class="section-desc" style="margin:0 auto;">Training programs designed to take your teams to the next level in software quality.</p>
   </div>
   <div class="training-grid">
     <div class="training-card reveal reveal-delay-1">
-      <div class="training-icon">🤖</div>
-      <div class="training-title">Automatización Web</div>
-      <div class="training-desc">Domina Selenium, Cypress y Playwright para construir frameworks de automatización escalables y mantenibles.</div>
+      <div class="training-icon"><i data-lucide="monitor"></i></div>
+      <div class="training-title">Web Automation</div>
+      <div class="training-desc">Master Selenium, Cypress and Playwright to build scalable and maintainable automation frameworks.</div>
       <div class="training-highlights">
         <div class="highlight-item">Page Object Model</div>
         <div class="highlight-item">CI/CD Integration</div>
-        <div class="highlight-item">Reporting y métricas</div>
-        <div class="highlight-item">BDD con Cucumber</div>
+        <div class="highlight-item">Cross-browser testing</div>
+        <div class="highlight-item">Reporting &amp; metrics</div>
       </div>
     </div>
     <div class="training-card reveal reveal-delay-2">
-      <div class="training-icon">📱</div>
-      <div class="training-title">Automatización Mobile</div>
-      <div class="training-desc">Appium y herramientas modernas para testing de aplicaciones iOS y Android, nativas e híbridas.</div>
+      <div class="training-icon"><i data-lucide="smartphone"></i></div>
+      <div class="training-title">Mobile Automation</div>
+      <div class="training-desc">Appium and modern tools for testing native and hybrid iOS and Android applications.</div>
       <div class="training-highlights">
-        <div class="highlight-item">Appium desde cero</div>
-        <div class="highlight-item">iOS & Android real devices</div>
-        <div class="highlight-item">Cloud device farms</div>
-        <div class="highlight-item">Gestures & biometrics</div>
+        <div class="highlight-item">Appium from scratch</div>
+        <div class="highlight-item">iOS &amp; Android real devices</div>
+        <div class="highlight-item">BrowserStack / LambdaTest</div>
+        <div class="highlight-item">Gestures &amp; biometrics</div>
       </div>
     </div>
     <div class="training-card featured reveal reveal-delay-3">
-      <div class="featured-badge">⭐ Destacado</div>
-      <div class="training-icon">⚡</div>
+      <div class="featured-badge">Featured</div>
+      <div class="training-icon"><i data-lucide="activity"></i></div>
       <div class="training-title">Performance Testing</div>
-      <div class="training-desc">Programa oficial de preparación para la certificación Performance Testing United. El único en su categoría.</div>
+      <div class="training-desc">Official preparation program for the Performance Testing United certification. The only one of its kind.</div>
       <div class="training-highlights">
-        <div class="highlight-item">JMeter avanzado</div>
-        <div class="highlight-item">Gatling & k6</div>
-        <div class="highlight-item">Análisis de resultados</div>
-        <div class="highlight-item">Certificación PTU</div>
+        <div class="highlight-item">JMeter &amp; Relampo</div>
+        <div class="highlight-item">Recording &amp; script correlation</div>
+        <div class="highlight-item">Scripting &amp; parameterization</div>
+        <div class="highlight-item">Local &amp; distributed load</div>
+        <div class="highlight-item">Reports &amp; monitoring</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ─── PTU ─── -->
 <section id="ptu">
   <div class="ptu-inner">
     <div>
       <div class="ptu-badge-big reveal">Performance Testing United</div>
-      <h2 class="section-title reveal">Somos los creadores de la certificación.</h2>
-      <p class="section-desc reveal">SQAAdvisory es la organización fundadora y Master Trainer oficial de <strong>Performance Testing United</strong>, la certificación internacional de referencia en pruebas de performance.</p>
+      <h2 class="section-title reveal">We created the certification.</h2>
+      <p class="section-desc reveal">SQAAdvisory is the founding organization and official Master Trainer of <strong>Performance Testing United</strong>, the international reference certification in performance testing.</p>
       <div class="ptu-features">
         <div class="ptu-feature reveal reveal-delay-1">
-          <div class="ptu-feature-icon">🏆</div>
-          <div class="ptu-feature-text">
-            <h4>Fundadores de PTU</h4>
-            <p>Diseñamos el estándar curricular y el marco de evaluación reconocido internacionalmente.</p>
-          </div>
+          <div class="ptu-feature-icon"><i data-lucide="trophy"></i></div>
+          <div class="ptu-feature-text"><h4>PTU Founders</h4><p>We designed the curricular standard and internationally recognized evaluation framework.</p></div>
         </div>
         <div class="ptu-feature reveal reveal-delay-2">
-          <div class="ptu-feature-icon">🎓</div>
-          <div class="ptu-feature-text">
-            <h4>Master Trainers Certificados</h4>
-            <p>Nuestros instructores son los únicos acreditados como Master Trainers de la certificación PTU.</p>
-          </div>
+          <div class="ptu-feature-icon"><i data-lucide="graduation-cap"></i></div>
+          <div class="ptu-feature-text"><h4>Certified Master Trainers</h4><p>Our instructors are the only ones accredited as PTU Master Trainers.</p></div>
         </div>
         <div class="ptu-feature reveal reveal-delay-3">
-          <div class="ptu-feature-icon">🌎</div>
-          <div class="ptu-feature-text">
-            <h4>Alcance Internacional</h4>
-            <p>Profesionales certificados en múltiples países de Latinoamérica y creciendo.</p>
-          </div>
+          <div class="ptu-feature-icon"><i data-lucide="globe"></i></div>
+          <div class="ptu-feature-text"><h4>International Reach</h4><p>Certified professionals across multiple countries in Latin America and growing.</p></div>
         </div>
       </div>
     </div>
@@ -1159,85 +368,71 @@
         <div class="ptu-logo-text">PTU</div>
         <div class="ptu-sub-text">Performance Testing United</div>
         <div class="ptu-ribbon">Certified Program</div>
-        <div class="ptu-stars">⭐⭐⭐⭐⭐</div>
-        <p style="margin-top:24px; font-size:0.82rem; color:var(--muted); line-height:1.7;">
-          La certificación que valida conocimiento real en pruebas de performance. Avalada por líderes de la industria.
-        </p>
+        <div class="ptu-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
+        <p style="margin-top:24px;font-size:0.82rem;color:var(--muted);line-height:1.7;">The certification that validates real knowledge in performance testing. Endorsed by industry leaders.</p>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ─── TOOLS ─── -->
 <section id="tools">
-  <div class="reveal" style="max-width:600px;">
-    <div class="section-label">Arsenal Técnico</div>
-    <h2 class="section-title">Las herramientas que dominamos.</h2>
-    <p class="section-desc">Trabajamos con las tecnologías líderes de la industria para cada disciplina de testing.</p>
+  <div class="reveal" style="max-width:600px;text-align:center;margin:0 auto;">
+    <div class="section-label">Tech Arsenal</div>
+    <h2 class="section-title">The tools we master.</h2>
+    <p class="section-desc" style="margin:0 auto;">We work with the industry-leading technologies for each testing discipline.</p>
   </div>
   <div class="tools-cats">
     <div class="tool-category reveal">
-      <div class="tool-cat-label">Automatización Web & E2E</div>
+      <div class="tool-cat-label">Web &amp; E2E Automation</div>
       <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#43B02A"></span> Selenium</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#17202C"></span> Cypress</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#2EAD33"></span> Playwright</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#e34c26"></span> TestNG</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#25A162"></span> Cucumber</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#C21325"></span> JUnit</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#43B02A"></span>Selenium</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#17202C"></span>Cypress</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#2EAD33"></span>Playwright</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#e34c26"></span>TestNG</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#25A162"></span>Cucumber</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#C21325"></span>JUnit</div>
       </div>
     </div>
     <div class="tool-category reveal">
-      <div class="tool-cat-label">Automatización Mobile</div>
+      <div class="tool-cat-label">Mobile Automation</div>
       <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#6929C4"></span> Appium</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#1565C0"></span> Detox</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#0DB7ED"></span> BrowserStack</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#FF6D00"></span> Sauce Labs</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#6929C4"></span>Appium</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#0DB7ED"></span>BrowserStack</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#FF6D00"></span>LambdaTest</div>
       </div>
     </div>
     <div class="tool-category reveal">
       <div class="tool-cat-label">Performance Testing</div>
       <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#D22128"></span> JMeter</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#FF6B35"></span> Gatling</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#7C3AED"></span> k6</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#F7A12A"></span> Locust</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#00B4D8"></span> BlazeMeter</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#E63946"></span>Relampo</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#D22128"></span>JMeter</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#F7A12A"></span>Locust</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#00B4D8"></span>BlazeMeter</div>
       </div>
     </div>
     <div class="tool-category reveal">
-      <div class="tool-cat-label">Seguridad</div>
+      <div class="tool-cat-label">Security</div>
       <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#E97627"></span> OWASP ZAP</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#FF6633"></span> Burp Suite</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#222222"></span> Nikto</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#1A1A2E"></span> Metasploit</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#00897B"></span> Nessus</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#E97627"></span>OWASP ZAP</div>
       </div>
     </div>
     <div class="tool-category reveal">
-      <div class="tool-cat-label">Accesibilidad</div>
+      <div class="tool-cat-label">Accessibility</div>
       <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#005A9C"></span> axe DevTools</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#1A73E8"></span> Lighthouse</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#0078D7"></span> WAVE</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#107C10"></span> NVDA</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#E3001B"></span> Pa11y</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#005A9C"></span>axe DevTools</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#1A73E8"></span>Lighthouse</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#0078D7"></span>WAVE</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- ─── TRUSTED BY ─── -->
 <section id="trusted">
   <div class="reveal">
-    <div class="section-label">Clientes</div>
-    <h2 class="section-title">Empresas que confían en nosotros.</h2>
-    <p class="section-desc" style="margin:0 auto;">Hemos trabajado con organizaciones de distintas industrias que eligieron la calidad como ventaja competitiva.</p>
+    <div class="section-label">Clients</div>
+    <h2 class="section-title">Companies that trust us.</h2>
+    <p class="section-desc" style="margin:0 auto;">We have worked with organizations across industries that chose quality as a competitive advantage.</p>
   </div>
   <div class="carousel-wrapper">
-    <div class="carousel-track" id="carousel-track">
+    <div class="carousel-track">
       <div class="client-card"><img src="clients/5-1.webp" alt="argentesting"></div>
       <div class="client-card"><img src="clients/4-1.webp" alt="Garbarino"></div>
       <div class="client-card"><img src="clients/3-1.webp" alt="Travelonux"></div>
@@ -1261,149 +456,52 @@
     </div>
   </div>
 </section>
-
-<!-- ─── CTA ─── -->
 <section id="cta">
   <div class="cta-glow"></div>
   <div class="reveal">
-    <h2 class="cta-title">¿Listo para elevar<br />tu calidad?</h2>
-    <p class="cta-desc">Hablemos. Analizamos tu contexto y diseñamos una estrategia de QA que realmente funcione para tu equipo.</p>
-    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
-      <a href="mailto:contacto@sqaadvisory.com" class="btn-primary">Escribenos ahora</a>
-      <a href="#principles" class="btn-ghost">Ver nuestros principios</a>
+    <h2 class="cta-title">Ready to elevate<br/>your quality?</h2>
+    <p class="cta-desc">Let's talk. We analyze your context and design a QA strategy that actually works for your team.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:contacto@sqaadvisory.com" class="btn-primary">Write to us</a>
+      <a href="#principles" class="btn-ghost">See our principles</a>
     </div>
   </div>
 </section>
-
-<!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-logo">
-    <img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" />
-  </div>
+  <div class="footer-logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <div class="footer-copy">© 2025 SQAAdvisory. All rights reserved.</div>
   <div class="footer-links">
-    <a href="#services">Servicios</a>
-    <a href="#training">Capacitación</a>
-    <a href="#ptu">PTU</a>
-    <a href="#cta">Contacto</a>
+    <a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
   </div>
 </footer>
-
 <script>
-  /* ─── PARTICLE CANVAS ─── */
-  const canvas = document.getElementById('particle-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, particles = [];
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
-  const COLORS = ['#00e5ff', '#a855f7', '#22d3a0', '#f97316'];
-  for (let i = 0; i < 80; i++) {
-    particles.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      r: Math.random() * 1.5 + 0.3,
-      dx: (Math.random() - 0.5) * 0.3,
-      dy: (Math.random() - 0.5) * 0.3,
-      color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      alpha: Math.random() * 0.5 + 0.1
-    });
-  }
-
-  function drawParticles() {
-    ctx.clearRect(0, 0, W, H);
-    for (let p of particles) {
-      ctx.save();
-      ctx.globalAlpha = p.alpha;
-      ctx.fillStyle = p.color;
-      ctx.shadowBlur = 8;
-      ctx.shadowColor = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-      p.x += p.dx;
-      p.y += p.dy;
-      if (p.x < 0 || p.x > W) p.dx *= -1;
-      if (p.y < 0 || p.y > H) p.dy *= -1;
-    }
-
-    // Draw connecting lines
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 120) {
-          ctx.save();
-          ctx.globalAlpha = (1 - dist/120) * 0.12;
-          ctx.strokeStyle = '#00e5ff';
-          ctx.lineWidth = 0.5;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-          ctx.restore();
-        }
-      }
-    }
-    requestAnimationFrame(drawParticles);
+  lucide.createIcons();
+  const canvas=document.getElementById('particle-canvas'),ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  const COLORS=['#00e5ff','#a855f7','#22d3a0','#f97316'];
+  for(let i=0;i<80;i++)particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.5+0.3,dx:(Math.random()-0.5)*0.3,dy:(Math.random()-0.5)*0.3,color:COLORS[Math.floor(Math.random()*COLORS.length)],alpha:Math.random()*0.5+0.1});
+  function drawParticles(){
+    ctx.clearRect(0,0,W,H);
+    for(let p of particles){ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.color;ctx.shadowBlur=8;ctx.shadowColor=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();ctx.restore();p.x+=p.dx;p.y+=p.dy;if(p.x<0||p.x>W)p.dx*=-1;if(p.y<0||p.y>H)p.dy*=-1}
+    for(let i=0;i<particles.length;i++)for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.save();ctx.globalAlpha=(1-dist/120)*0.12;ctx.strokeStyle='#00e5ff';ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();ctx.restore()}}
+    requestAnimationFrame(drawParticles)
   }
   drawParticles();
-
-  /* ─── NAV SCROLL ─── */
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  /* ─── SCROLL REVEAL ─── */
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => observer.observe(el));
-
-  /* ─── COUNTER ANIMATION ─── */
-  function animateCounters() {
-    document.querySelectorAll('.stat-number').forEach(el => {
-      const text = el.textContent;
-      const num = parseInt(text.replace(/\D/g, ''));
-      if (isNaN(num)) return;
-      const prefix = text.match(/^[+#]/) ? text[0] : '';
-      let start = 0;
-      const step = num / 40;
-      const interval = setInterval(() => {
-        start += step;
-        if (start >= num) { start = num; clearInterval(interval); }
-        el.textContent = prefix + Math.floor(start);
-      }, 30);
-    });
-  }
-
-  const heroObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) { animateCounters(); heroObserver.disconnect(); }
-  }, { threshold: 0.5 });
-  heroObserver.observe(document.querySelector('.hero-stats'));
-
-  /* ─── SMOOTH HOVER GLOW on principle cards ─── */
-  document.querySelectorAll('.principle-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--mouse-x', x + '%');
-      card.style.setProperty('--mouse-y', y + '%');
+  const navbar=document.getElementById('navbar');
+  window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40));
+  const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+  const filenames={functional:'CheckoutTest.java',performance:'relampo-test.yaml',security:'zap-scan.yaml',mobile:'LoginTest.cs',accessibility:'accessibility-audit.html'};
+  document.querySelectorAll('.service-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const svc=item.dataset.service;
+      document.querySelectorAll('.service-item').forEach(i=>i.classList.remove('active'));
+      document.querySelectorAll('.code-panel').forEach(p=>p.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('panel-'+svc).classList.add('active');
+      document.getElementById('vc-filename').textContent=filenames[svc];
     });
   });
 </script>
