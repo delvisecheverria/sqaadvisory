@@ -242,13 +242,24 @@
         </div>
         <div class="code-panel active" id="panel-functional">
 <span class="cb-comment">// Selenium + Java — Functional Test</span>
+<span class="cb-keyword">@BeforeEach</span>
+<span class="cb-keyword">void</span> <span class="cb-fn">openCheckout</span>() {
+  driver.<span class="cb-fn">get</span>(<span class="cb-string">"https://app.example.com/cart"</span>);
+  cart.<span class="cb-fn">addProduct</span>(<span class="cb-string">"PTU Course"</span>);
+  cart.<span class="cb-fn">continueToCheckout</span>();
+}
+
 <span class="cb-keyword">@Test</span>
 <span class="cb-keyword">public void</span> <span class="cb-fn">checkoutFlowShouldComplete</span>() {
-  driver.<span class="cb-fn">get</span>(<span class="cb-string">"https://app.example.com/checkout"</span>);
   <span class="cb-keyword">new</span> <span class="cb-type">WebDriverWait</span>(driver, <span class="cb-number">10</span>)
     .until(<span class="cb-fn">visibilityOf</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"cart-summary"</span>)));
+  checkout.<span class="cb-fn">fillCustomer</span>(<span class="cb-string">"qa@sqaadvisory.com"</span>);
+  checkout.<span class="cb-fn">selectPaymentMethod</span>(<span class="cb-string">"credit-card"</span>);
   driver.<span class="cb-fn">findElement</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"btn-pay"</span>)).<span class="cb-fn">click</span>();
+  <span class="cb-keyword">String</span> msg = confirmation.<span class="cb-fn">bannerText</span>();
   <span class="cb-fn">assertEquals</span>(<span class="cb-string">"Order confirmed!"</span>, msg);
+  <span class="cb-fn">assertTrue</span>(orders.<span class="cb-fn">latest</span>().<span class="cb-fn">hasInvoice</span>());
+  evidence.<span class="cb-fn">attachScreenshot</span>(<span class="cb-string">"checkout-success"</span>);
 }<span class="cb-cursor"></span>
         </div>
         <div class="code-panel" id="panel-performance">
@@ -259,18 +270,44 @@
   <span class="cb-keyword">duration</span>: <span class="cb-number">300</span>s
   <span class="cb-keyword">users</span>: <span class="cb-number">500</span>
   <span class="cb-keyword">ramp_up</span>: <span class="cb-number">60</span>s
+  <span class="cb-keyword">think_time</span>: <span class="cb-string">1s..3s</span>
+  <span class="cb-keyword">regions</span>: [<span class="cb-string">us-east</span>, <span class="cb-string">latam-south</span>]
+<span class="cb-keyword">thresholds</span>:
+  <span class="cb-keyword">http_req_failed</span>: <span class="cb-string">&lt; 1%</span>
+  <span class="cb-keyword">p95</span>: <span class="cb-string">&lt; 800ms</span>
+  <span class="cb-keyword">p99</span>: <span class="cb-string">&lt; 1400ms</span>
 <span class="cb-keyword">steps</span>:
+  - <span class="cb-keyword">name</span>: <span class="cb-string">Browse catalog</span>
+    <span class="cb-keyword">request</span>: <span class="cb-type">GET</span> /api/products
+    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">status</span>: <span class="cb-number">200</span>}
+  - <span class="cb-keyword">name</span>: <span class="cb-string">Add item</span>
+    <span class="cb-keyword">request</span>: <span class="cb-type">POST</span> /api/cart/items
+    <span class="cb-keyword">body</span>: {<span class="cb-keyword">sku</span>: <span class="cb-string">"PTU-101"</span>, <span class="cb-keyword">qty</span>: <span class="cb-number">1</span>}
   - <span class="cb-keyword">name</span>: <span class="cb-string">Checkout</span>
     <span class="cb-keyword">request</span>: <span class="cb-type">POST</span> /api/orders
-    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">p95</span>: <span class="cb-number">&lt; 800ms</span>}<span class="cb-cursor"></span>
+    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">status</span>: <span class="cb-number">201</span>, <span class="cb-keyword">p95</span>: <span class="cb-number">&lt; 800ms</span>}
+<span class="cb-keyword">outputs</span>:
+  <span class="cb-keyword">report</span>: <span class="cb-string">reports/checkout-load.html</span><span class="cb-cursor"></span>
         </div>
         <div class="code-panel" id="panel-security">
 <span class="cb-comment"># OWASP ZAP — Active Scan</span>
 <span class="cb-keyword">zap</span>:
   <span class="cb-keyword">target</span>: <span class="cb-string">https://app.example.com</span>
   <span class="cb-keyword">scan_type</span>: <span class="cb-string">active</span>
+  <span class="cb-keyword">auth</span>:
+    <span class="cb-keyword">login_url</span>: <span class="cb-string">/login</span>
+    <span class="cb-keyword">username</span>: <span class="cb-string">${QA_USER}</span>
+    <span class="cb-keyword">password</span>: <span class="cb-string">${QA_PASS}</span>
+  <span class="cb-keyword">context</span>:
+    <span class="cb-keyword">include</span>: [<span class="cb-string">/api/.*</span>, <span class="cb-string">/checkout/.*</span>]
+    <span class="cb-keyword">exclude</span>: [<span class="cb-string">/logout</span>, <span class="cb-string">/billing/live</span>]
   <span class="cb-keyword">rules</span>: [<span class="cb-string">sql-injection</span>, <span class="cb-string">xss-reflected</span>, <span class="cb-string">csrf-token-missing</span>]
-  <span class="cb-keyword">report</span>: {<span class="cb-keyword">format</span>: <span class="cb-string">html</span>, <span class="cb-keyword">fail_on</span>: <span class="cb-string">HIGH</span>}<span class="cb-cursor"></span>
+  <span class="cb-keyword">passive_checks</span>: [<span class="cb-string">headers</span>, <span class="cb-string">cookies</span>, <span class="cb-string">tls</span>]
+  <span class="cb-keyword">report</span>:
+    <span class="cb-keyword">format</span>: <span class="cb-string">html</span>
+    <span class="cb-keyword">fail_on</span>: <span class="cb-string">HIGH</span>
+    <span class="cb-keyword">artifact</span>: <span class="cb-string">security-zap-report.html</span>
+  <span class="cb-keyword">remediation</span>: <span class="cb-string">map findings to OWASP Top 10</span><span class="cb-cursor"></span>
         </div>
         <div class="code-panel" id="panel-mobile">
 <span class="cb-comment">// Appium + C# — Mobile Test</span>
@@ -278,19 +315,37 @@
 <span class="cb-keyword">public async</span> <span class="cb-type">Task</span> <span class="cb-fn">LoginShouldSucceed</span>() {
   <span class="cb-keyword">var</span> opts = <span class="cb-keyword">new</span> <span class="cb-type">AppiumOptions</span>();
   opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"platformName"</span>, <span class="cb-string">"iOS"</span>);
+  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"deviceName"</span>, <span class="cb-string">"iPhone 15"</span>);
+  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"automationName"</span>, <span class="cb-string">"XCUITest"</span>);
   <span class="cb-keyword">var</span> driver = <span class="cb-keyword">new</span> <span class="cb-type">IOSDriver</span>(opts);
+  <span class="cb-keyword">var</span> wait = <span class="cb-keyword">new</span> <span class="cb-type">WebDriverWait</span>(driver, <span class="cb-type">TimeSpan</span>.<span class="cb-fn">FromSeconds</span>(<span class="cb-number">12</span>));
+  wait.<span class="cb-fn">Until</span>(d =&gt; d.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"email"</span>))).<span class="cb-fn">SendKeys</span>(<span class="cb-string">"qa@sqaadvisory.com"</span>);
+  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"password"</span>)).<span class="cb-fn">SendKeys</span>(<span class="cb-string">"********"</span>);
   driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"btnLogin"</span>)).<span class="cb-fn">Click</span>();
-  <span class="cb-fn">Assert</span>.<span class="cb-fn">IsTrue</span>(<span class="cb-fn">IsLoggedIn</span>());<span class="cb-cursor"></span>
+  <span class="cb-fn">Assert</span>.<span class="cb-fn">IsTrue</span>(<span class="cb-fn">IsLoggedIn</span>());
+  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">MobileBy</span>.<span class="cb-fn">AccessibilityId</span>(<span class="cb-string">"Profile"</span>)).<span class="cb-fn">Click</span>();
+  <span class="cb-fn">Assert</span>.<span class="cb-fn">AreEqual</span>(<span class="cb-string">"QA Advisor"</span>, profile.<span class="cb-fn">DisplayName</span>());
+  await evidence.<span class="cb-fn">AttachDeviceLogs</span>(driver);<span class="cb-cursor"></span>
 }
         </div>
         <div class="code-panel" id="panel-accessibility">
 <span class="cb-comment">&lt;!-- axe-core — Accessibility Audit --&gt;</span>
 <span class="cb-keyword">&lt;script&gt;</span>
   <span class="cb-fn">axe</span>.<span class="cb-fn">run</span>(document, {
-    <span class="cb-keyword">runOnly</span>: [<span class="cb-string">'wcag2a'</span>, <span class="cb-string">'wcag2aa'</span>]
+    <span class="cb-keyword">runOnly</span>: [<span class="cb-string">'wcag2a'</span>, <span class="cb-string">'wcag2aa'</span>],
+    <span class="cb-keyword">rules</span>: {
+      <span class="cb-string">'color-contrast'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> },
+      <span class="cb-string">'aria-valid-attr'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> },
+      <span class="cb-string">'label'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> }
+    }
   }).<span class="cb-fn">then</span>(results =&gt; {
-    results.violations.<span class="cb-fn">forEach</span>(v =&gt;
-      console.<span class="cb-fn">error</span>(<span class="cb-string">`[${v.impact}]`</span>, v.description));
+    <span class="cb-keyword">const</span> serious = results.violations.<span class="cb-fn">filter</span>(v =&gt;
+      [<span class="cb-string">'serious'</span>, <span class="cb-string">'critical'</span>].<span class="cb-fn">includes</span>(v.impact));
+    serious.<span class="cb-fn">forEach</span>(v =&gt; {
+      console.<span class="cb-fn">error</span>(<span class="cb-string">`[${v.impact}]`</span>, v.description);
+      v.nodes.<span class="cb-fn">forEach</span>(node =&gt; console.<span class="cb-fn">warn</span>(node.target));
+    });
+    <span class="cb-keyword">if</span> (serious.length) <span class="cb-keyword">throw new</span> <span class="cb-type">Error</span>(<span class="cb-string">'Accessibility gate failed'</span>);
   });
 <span class="cb-keyword">&lt;/script&gt;</span><span class="cb-cursor"></span>
         </div>
