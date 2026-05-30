@@ -1,214 +1,1407 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="SQA Advisory ayuda a equipos de producto e ingeniería a elevar la calidad del software con estrategia QA, automatización, gobierno de pruebas y confiabilidad de releases."
-    />
-    <title>SQA Advisory | Calidad de software con criterio ejecutivo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header" data-header>
-      <a class="brand" href="#inicio" aria-label="SQA Advisory inicio">
-        <span class="brand-mark">SQA</span>
-        <span>Advisory</span>
-      </a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SQAAdvisory — Quality Engineering Consultancy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050508;
+      --bg2: #0c0c14;
+      --bg3: #12121e;
+      --cyan: #00e5ff;
+      --purple: #a855f7;
+      --green: #22d3a0;
+      --orange: #f97316;
+      --pink: #ec4899;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: rgba(255,255,255,0.07);
+      --glass: rgba(255,255,255,0.04);
+      --radius: 16px;
+    }
 
-      <button class="nav-toggle" type="button" aria-label="Abrir navegación" aria-expanded="false" data-nav-toggle>
-        <span></span>
-        <span></span>
-      </button>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <nav class="main-nav" data-nav>
-        <a href="#servicios">Servicios</a>
-        <a href="#metodo">Método</a>
-        <a href="#resultados">Resultados</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-    </header>
+    html { scroll-behavior: smooth; }
 
-    <main>
-      <section class="hero" id="inicio" aria-label="SQA Advisory">
-        <img src="assets/sqa-hero.png" alt="Equipo consultor revisando métricas de calidad de software" />
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-          <p class="eyebrow">QA Strategy · Test Automation · Release Confidence</p>
-          <h1>SQA Advisory</h1>
-          <p class="hero-copy">
-            Convertimos la calidad de software en una ventaja operativa: menos riesgo en producción,
-            releases más predecibles y equipos QA con foco estratégico.
-          </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="#contacto">Agendar diagnóstico</a>
-            <a class="button button-secondary" href="#servicios">Ver servicios</a>
-          </div>
-        </div>
-        <div class="hero-metrics" aria-label="Indicadores principales">
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── CANVAS BACKGROUND ─── */
+    #particle-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,8,0.7);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    nav.scrolled {
+      padding: 14px 5%;
+      background: rgba(5,5,8,0.92);
+    }
+    .logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+    .logo img.logo-color {
+      filter: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 10px 22px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      border: none;
+      border-radius: 50px;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.875rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ─── SECTIONS WRAPPER ─── */
+    section { position: relative; z-index: 1; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(0,229,255,0.3);
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      background: rgba(0,229,255,0.05);
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -3px;
+      margin-bottom: 28px;
+    }
+    h1 .line1 { display: block; color: var(--text); }
+    h1 .line2 {
+      display: block;
+      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      max-width: 580px;
+      font-size: 1.125rem;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 44px;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      border: none;
+      border-radius: 50px;
+      color: #000;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,229,255,0.45);
+    }
+    .btn-ghost {
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: var(--glass);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 72px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--cyan), transparent);
+      animation: scroll-anim 2s infinite;
+    }
+    @keyframes scroll-anim {
+      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    /* ─── PRINCIPLES ─── */
+    #principles {
+      padding: 120px 5%;
+    }
+    .principles-header { margin-bottom: 72px; }
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .principle-card {
+      position: relative;
+      padding: 40px 36px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, var(--card-color) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .principle-card:hover { transform: translateY(-6px); border-color: var(--card-color); }
+    .principle-card:hover::before { opacity: 0.08; }
+    .principle-card[data-color="cyan"] { --card-color: var(--cyan); }
+    .principle-card[data-color="purple"] { --card-color: var(--purple); }
+    .principle-card[data-color="orange"] { --card-color: var(--orange); }
+    .principle-card[data-color="green"] { --card-color: var(--green); }
+    .principle-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+    }
+    .principle-number {
+      position: absolute;
+      top: 32px; right: 32px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: var(--card-color);
+      opacity: 0.07;
+      line-height: 1;
+    }
+    .principle-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--card-color);
+      margin-bottom: 8px;
+    }
+    .principle-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .principle-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      padding: 120px 5%;
+      background: var(--bg2);
+    }
+    .services-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .service-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--glass);
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .service-item:hover {
+      border-color: rgba(0,229,255,0.25);
+      transform: translateX(6px);
+    }
+    .service-icon {
+      width: 44px; height: 44px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+    }
+    .service-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+    .service-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .tag {
+      padding: 3px 10px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .services-visual {
+      position: sticky;
+      top: 120px;
+    }
+    .visual-card {
+      border-radius: 24px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 36px;
+      overflow: hidden;
+    }
+    .vc-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .vc-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .vc-dot:nth-child(1) { background: #ff5f57; }
+    .vc-dot:nth-child(2) { background: #febc2e; }
+    .vc-dot:nth-child(3) { background: #28c840; }
+    .code-block {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+    .cb-comment { color: #4a5568; }
+    .cb-keyword { color: var(--purple); }
+    .cb-fn { color: var(--cyan); }
+    .cb-string { color: var(--green); }
+    .cb-number { color: var(--orange); }
+    .cb-cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--cyan);
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .test-pass {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .test-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 0.82rem;
+    }
+    .test-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .pass { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .fail { background: #f87171; box-shadow: 0 0 8px #f87171; }
+    .running {
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse-dot 1s infinite;
+    }
+    .test-name { color: var(--muted); flex: 1; }
+    .test-time { color: #475569; font-size: 0.75rem; }
+
+    /* ─── TRAINING ─── */
+    #training {
+      padding: 120px 5%;
+    }
+    .training-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 60px;
+    }
+    .training-card {
+      position: relative;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--glass);
+      padding: 40px 36px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .training-card:hover { transform: translateY(-6px); }
+    .training-card.featured {
+      border-color: rgba(168,85,247,0.4);
+      background: linear-gradient(135deg, rgba(168,85,247,0.06), rgba(0,229,255,0.04));
+    }
+    .featured-badge {
+      position: absolute;
+      top: 20px; right: 20px;
+      padding: 4px 12px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .training-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .training-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .training-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+    .training-highlights {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .highlight-item::before {
+      content: '→';
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    /* ─── PTU SECTION ─── */
+    #ptu {
+      padding: 120px 5%;
+      background: var(--bg2);
+    }
+    .ptu-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .ptu-badge-big {
+      display: inline-block;
+      padding: 8px 20px;
+      background: linear-gradient(135deg, rgba(249,115,22,0.15), rgba(168,85,247,0.15));
+      border: 1px solid rgba(249,115,22,0.3);
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .ptu-visual {
+      position: relative;
+    }
+    .ptu-cert-card {
+      background: linear-gradient(135deg, var(--bg3), #1a0e2e);
+      border: 1px solid rgba(168,85,247,0.3);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ptu-cert-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(168,85,247,0.08) 0%, transparent 60%);
+    }
+    .ptu-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--orange), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .ptu-sub-text {
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+    .ptu-ribbon {
+      display: inline-block;
+      padding: 6px 18px;
+      background: linear-gradient(135deg, var(--orange), var(--pink));
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+    .ptu-stars {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      font-size: 1.2rem;
+    }
+    .ptu-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .ptu-feature {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .ptu-feature-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      flex-shrink: 0;
+    }
+    .ptu-feature-text h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .ptu-feature-text p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── TOOLS ─── */
+    #tools {
+      padding: 120px 5%;
+    }
+    .tools-cats {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      margin-top: 60px;
+    }
+    .tool-category {}
+    .tool-cat-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .tool-cat-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .tool-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--glass);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .tool-pill:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .tool-pill .tool-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ─── TRUSTED BY / CAROUSEL ─── */
+    #trusted {
+      padding: 120px 5%;
+      background: var(--bg2);
+      text-align: center;
+    }
+    .carousel-wrapper {
+      overflow: hidden;
+      margin-top: 56px;
+      position: relative;
+    }
+    .carousel-wrapper::before,
+    .carousel-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+    }
+    .carousel-wrapper::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg2), transparent);
+    }
+    .carousel-wrapper::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg2), transparent);
+    }
+    .carousel-track {
+      display: flex;
+      gap: 32px;
+      width: max-content;
+      animation: carousel-scroll 28s linear infinite;
+    }
+    .carousel-track:hover { animation-play-state: paused; }
+    @keyframes carousel-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .client-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 36px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--glass);
+      min-width: 180px;
+      height: 70px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: -0.3px;
+      white-space: nowrap;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .client-card:hover {
+      border-color: rgba(0,229,255,0.25);
+      color: var(--text);
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      padding: 140px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(168,85,247,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cta-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 48px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.7;
+    }
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .services-inner, .ptu-inner { grid-template-columns: 1fr; gap: 48px; }
+      .services-visual { position: static; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      h1 { letter-spacing: -1.5px; }
+      .hero-stats { gap: 28px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<!-- ─── NAV ─── -->
+<nav id="navbar">
+  <div class="logo">
+    <img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" />
+  </div>
+  <ul class="nav-links">
+    <li><a href="#principles">Principios</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#training">Capacitación</a></li>
+    <li><a href="#ptu">PTU</a></li>
+    <li><a href="#tools">Herramientas</a></li>
+    <li><a href="#trusted">Clientes</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Contactar</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-badge">Quality Engineering Consultancy</div>
+  <h1>
+    <span class="line1">Quality is not</span>
+    <span class="line2">optional.</span>
+  </h1>
+  <p class="hero-sub">
+    Transformamos la forma en que los equipos construyen software. Consultoría especializada en QA, Testing Automatizado, Performance y Seguridad.
+  </p>
+  <div class="hero-buttons">
+    <a href="#services" class="btn-primary">Explorar Servicios</a>
+    <a href="#cta" class="btn-ghost">Hablar con un experto</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">+50</div>
+      <div class="stat-label">Proyectos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">+200</div>
+      <div class="stat-label">Profesionales formados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Pilares de calidad</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">#1</div>
+      <div class="stat-label">PTU Certification</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    Scroll
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ─── PRINCIPLES ─── -->
+<section id="principles">
+  <div class="principles-header reveal">
+    <div class="section-label">Nuestros Pilares</div>
+    <h2 class="section-title">Cuatro principios.<br />Un estándar.</h2>
+    <p class="section-desc">Cada proyecto que tomamos está guiado por estos cuatro fundamentos de la calidad de software.</p>
+  </div>
+  <div class="principles-grid">
+    <div class="principle-card reveal reveal-delay-1" data-color="cyan">
+      <div class="principle-number">01</div>
+      <div class="principle-icon">⚙️</div>
+      <div class="principle-tag">Principio I</div>
+      <div class="principle-name">Be Functional</div>
+      <p class="principle-desc">Validamos que cada funcionalidad opere exactamente como fue diseñada, desde pruebas manuales exploratorias hasta suites de automatización completas con cobertura de regresión.</p>
+    </div>
+    <div class="principle-card reveal reveal-delay-2" data-color="purple">
+      <div class="principle-number">02</div>
+      <div class="principle-icon">⚡</div>
+      <div class="principle-tag">Principio II</div>
+      <div class="principle-name">Be Fast</div>
+      <p class="principle-desc">El rendimiento no es una opción tardía. Diseñamos y ejecutamos pruebas de performance para garantizar que tu aplicación escale sin comprometer la experiencia de usuario.</p>
+    </div>
+    <div class="principle-card reveal reveal-delay-3" data-color="orange">
+      <div class="principle-number">03</div>
+      <div class="principle-icon">🛡️</div>
+      <div class="principle-tag">Principio III</div>
+      <div class="principle-name">Be Unbreakable</div>
+      <p class="principle-desc">La seguridad no se prueba al final, se construye desde el inicio. Realizamos análisis de vulnerabilidades, pruebas de penetración y auditorías de seguridad para blindar tu software.</p>
+    </div>
+    <div class="principle-card reveal reveal-delay-4" data-color="green">
+      <div class="principle-number">04</div>
+      <div class="principle-icon">♿</div>
+      <div class="principle-tag">Principio IV</div>
+      <div class="principle-name">Be Accessible</div>
+      <p class="principle-desc">Software de calidad es software para todos. Aplicamos estándares WCAG para garantizar que tus productos sean inclusivos y accesibles para cada tipo de usuario.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SERVICES ─── -->
+<section id="services">
+  <div class="services-inner">
+    <div>
+      <div class="reveal">
+        <div class="section-label">Servicios</div>
+        <h2 class="section-title">Lo que hacemos<br />mejor.</h2>
+        <p class="section-desc">Cubrimos el ciclo completo de calidad de software. Desde la estrategia hasta la ejecución.</p>
+      </div>
+      <div class="services-list">
+        <div class="service-item reveal reveal-delay-1">
+          <div class="service-icon">🔍</div>
           <div>
-            <strong>30 días</strong>
-            <span>para mapear riesgos críticos</span>
-          </div>
-          <div>
-            <strong>4 frentes</strong>
-            <span>estrategia, automatización, datos y gobierno</span>
-          </div>
-          <div>
-            <strong>1 plan</strong>
-            <span>accionable para líderes técnicos</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section intro" aria-label="Propuesta de valor">
-        <div class="section-inner intro-grid">
-          <div>
-            <p class="section-kicker">Calidad con dirección</p>
-            <h2>Ayudamos a que QA deje de ser un cuello de botella y se convierta en señal de confianza.</h2>
-          </div>
-          <p>
-            SQA Advisory trabaja con CTOs, QA Managers y equipos de producto que necesitan claridad:
-            qué probar, qué automatizar, qué medir y cómo liberar software con menos incertidumbre.
-          </p>
-        </div>
-      </section>
-
-      <section class="section services" id="servicios">
-        <div class="section-inner">
-          <div class="section-heading">
-            <p class="section-kicker">Servicios</p>
-            <h2>Intervenciones precisas para madurar tu práctica QA.</h2>
-          </div>
-
-          <div class="service-grid">
-            <article class="service-card">
-              <span class="card-icon">01</span>
-              <h3>Assessment QA</h3>
-              <p>Evaluamos procesos, cobertura, deuda de pruebas, riesgos de release y madurez del equipo.</p>
-            </article>
-            <article class="service-card">
-              <span class="card-icon">02</span>
-              <h3>Estrategia de automatización</h3>
-              <p>Diseñamos una pirámide de pruebas sostenible, alineada al producto y al pipeline CI/CD.</p>
-            </article>
-            <article class="service-card">
-              <span class="card-icon">03</span>
-              <h3>QA Operating Model</h3>
-              <p>Definimos roles, ceremonias, métricas y criterios de salida para escalar calidad sin fricción.</p>
-            </article>
-            <article class="service-card">
-              <span class="card-icon">04</span>
-              <h3>Release readiness</h3>
-              <p>Implementamos tableros, gates y reportes ejecutivos para decidir releases con evidencia.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section method" id="metodo">
-        <div class="section-inner method-layout">
-          <div class="section-heading">
-            <p class="section-kicker">Método</p>
-            <h2>Un diagnóstico breve que termina en decisiones concretas.</h2>
-            <p>
-              Nuestro enfoque combina entrevistas, revisión técnica y análisis de datos para priorizar
-              acciones de alto impacto.
-            </p>
-          </div>
-
-          <ol class="timeline">
-            <li>
-              <span>01</span>
-              <div>
-                <h3>Entender el producto</h3>
-                <p>Contexto de negocio, flujos críticos, arquitectura y tolerancia al riesgo.</p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <h3>Leer las señales</h3>
-                <p>Defectos, flaky tests, cobertura, incidentes, cycle time y calidad de ambientes.</p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <h3>Priorizar el sistema</h3>
-                <p>Roadmap QA por impacto, esfuerzo, ownership y dependencia técnica.</p>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="section outcomes" id="resultados">
-        <div class="section-inner">
-          <div class="section-heading">
-            <p class="section-kicker">Resultados</p>
-            <h2>Lo que queda después de la consultoría.</h2>
-          </div>
-
-          <div class="outcome-grid">
-            <div class="outcome-panel">
-              <h3>Mapa de riesgos</h3>
-              <p>Una visión clara de los flujos, capas y dependencias donde la calidad necesita atención.</p>
+            <div class="service-name">Pruebas Funcionales</div>
+            <div class="service-desc">Testing manual y automatizado, smoke, regresión, integración y end-to-end. Cubrimos cada flujo crítico.</div>
+            <div class="service-tags">
+              <span class="tag">Manual</span>
+              <span class="tag">Automatizado</span>
+              <span class="tag">E2E</span>
+              <span class="tag">Regresión</span>
             </div>
-            <div class="outcome-panel">
-              <h3>Plan de automatización</h3>
-              <p>Backlog priorizado, stack recomendado, criterios de mantenimiento y métricas de salud.</p>
-            </div>
-            <div class="outcome-panel">
-              <h3>Modelo operativo</h3>
-              <p>RACI, rituales, definición de listo, definición de hecho y gates de release.</p>
-            </div>
           </div>
         </div>
-      </section>
-
-      <section class="contact" id="contacto">
-        <div class="contact-inner">
+        <div class="service-item reveal reveal-delay-2">
+          <div class="service-icon">📊</div>
           <div>
-            <p class="section-kicker">Contacto</p>
-            <h2>Hablemos de tu siguiente release crítico.</h2>
-            <p>
-              Cuéntanos dónde está el dolor: regresiones, baja cobertura, automatización frágil,
-              releases lentos o falta de visibilidad ejecutiva.
-            </p>
+            <div class="service-name">Pruebas de Performance</div>
+            <div class="service-desc">Load testing, stress testing, soak testing y análisis de cuellos de botella para sistemas de alta concurrencia.</div>
+            <div class="service-tags">
+              <span class="tag">Load Testing</span>
+              <span class="tag">Stress Testing</span>
+              <span class="tag">Scalability</span>
+            </div>
           </div>
-
-          <form class="contact-form" action="mailto:hello@sqaadvisory.com" method="post" enctype="text/plain">
-            <label>
-              Nombre
-              <input type="text" name="nombre" autocomplete="name" required />
-            </label>
-            <label>
-              Email
-              <input type="email" name="email" autocomplete="email" required />
-            </label>
-            <label>
-              ¿Qué necesitas mejorar?
-              <textarea name="mensaje" rows="5" required></textarea>
-            </label>
-            <button class="button button-primary" type="submit">Enviar consulta</button>
-          </form>
         </div>
-      </section>
-    </main>
+        <div class="service-item reveal reveal-delay-3">
+          <div class="service-icon">🔐</div>
+          <div>
+            <div class="service-name">Pruebas de Seguridad</div>
+            <div class="service-desc">Vulnerability scanning, penetration testing, OWASP Top 10 assessment y análisis de configuración de seguridad.</div>
+            <div class="service-tags">
+              <span class="tag">Pen Testing</span>
+              <span class="tag">OWASP</span>
+              <span class="tag">Vulnerability Scan</span>
+            </div>
+          </div>
+        </div>
+        <div class="service-item reveal reveal-delay-4">
+          <div class="service-icon">📱</div>
+          <div>
+            <div class="service-name">Automatización Web & Mobile</div>
+            <div class="service-desc">Frameworks de automatización robustos para aplicaciones web y móviles nativas, híbridas y cross-platform.</div>
+            <div class="service-tags">
+              <span class="tag">Web</span>
+              <span class="tag">iOS</span>
+              <span class="tag">Android</span>
+              <span class="tag">Hybrid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="services-visual reveal">
+      <div class="visual-card">
+        <div class="vc-header">
+          <div class="vc-dot"></div>
+          <div class="vc-dot"></div>
+          <div class="vc-dot"></div>
+        </div>
+        <div class="code-block">
+          <span class="cb-comment">// SQAAdvisory — Test Suite</span><br/>
+          <br/>
+          <span class="cb-keyword">describe</span>(<span class="cb-string">'Checkout Flow'</span>, () => {<br/>
+          &nbsp;&nbsp;<span class="cb-keyword">it</span>(<span class="cb-string">'should complete purchase'</span>,<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">async</span> () => {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">page</span>.<span class="cb-fn">goto</span>(<span class="cb-string">'/checkout'</span>);<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">fillForm</span>(testUser);<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">await</span> <span class="cb-fn">submitOrder</span>();<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="cb-keyword">expect</span>(status).<span class="cb-fn">toBe</span>(<span class="cb-number">200</span>);<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
+          });<span class="cb-cursor"></span>
+        </div>
+        <div class="test-pass">
+          <div class="test-row">
+            <div class="test-dot pass"></div>
+            <div class="test-name">Login flow validation</div>
+            <div class="test-time">142ms</div>
+          </div>
+          <div class="test-row">
+            <div class="test-dot pass"></div>
+            <div class="test-name">Cart add/remove items</div>
+            <div class="test-time">87ms</div>
+          </div>
+          <div class="test-row">
+            <div class="test-dot running"></div>
+            <div class="test-name">Checkout complete purchase</div>
+            <div class="test-time">running…</div>
+          </div>
+          <div class="test-row">
+            <div class="test-dot fail"></div>
+            <div class="test-name">Payment gateway timeout</div>
+            <div class="test-time">5001ms</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="site-footer">
-      <span>SQA Advisory</span>
-      <span>© <span data-year></span> Calidad de software con criterio ejecutivo.</span>
-    </footer>
+<!-- ─── TRAINING ─── -->
+<section id="training">
+  <div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+    <div class="section-label">Capacitación</div>
+    <h2 class="section-title">Formamos a los mejores testers.</h2>
+    <p class="section-desc" style="margin:0 auto;">Programas de entrenamiento diseñados para llevar a tus equipos al siguiente nivel en calidad de software.</p>
+  </div>
+  <div class="training-grid">
+    <div class="training-card reveal reveal-delay-1">
+      <div class="training-icon">🤖</div>
+      <div class="training-title">Automatización Web</div>
+      <div class="training-desc">Domina Selenium, Cypress y Playwright para construir frameworks de automatización escalables y mantenibles.</div>
+      <div class="training-highlights">
+        <div class="highlight-item">Page Object Model</div>
+        <div class="highlight-item">CI/CD Integration</div>
+        <div class="highlight-item">Reporting y métricas</div>
+        <div class="highlight-item">BDD con Cucumber</div>
+      </div>
+    </div>
+    <div class="training-card reveal reveal-delay-2">
+      <div class="training-icon">📱</div>
+      <div class="training-title">Automatización Mobile</div>
+      <div class="training-desc">Appium y herramientas modernas para testing de aplicaciones iOS y Android, nativas e híbridas.</div>
+      <div class="training-highlights">
+        <div class="highlight-item">Appium desde cero</div>
+        <div class="highlight-item">iOS & Android real devices</div>
+        <div class="highlight-item">Cloud device farms</div>
+        <div class="highlight-item">Gestures & biometrics</div>
+      </div>
+    </div>
+    <div class="training-card featured reveal reveal-delay-3">
+      <div class="featured-badge">⭐ Destacado</div>
+      <div class="training-icon">⚡</div>
+      <div class="training-title">Performance Testing</div>
+      <div class="training-desc">Programa oficial de preparación para la certificación Performance Testing United. El único en su categoría.</div>
+      <div class="training-highlights">
+        <div class="highlight-item">JMeter avanzado</div>
+        <div class="highlight-item">Gatling & k6</div>
+        <div class="highlight-item">Análisis de resultados</div>
+        <div class="highlight-item">Certificación PTU</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
-  </body>
+<!-- ─── PTU ─── -->
+<section id="ptu">
+  <div class="ptu-inner">
+    <div>
+      <div class="ptu-badge-big reveal">Performance Testing United</div>
+      <h2 class="section-title reveal">Somos los creadores de la certificación.</h2>
+      <p class="section-desc reveal">SQAAdvisory es la organización fundadora y Master Trainer oficial de <strong>Performance Testing United</strong>, la certificación internacional de referencia en pruebas de performance.</p>
+      <div class="ptu-features">
+        <div class="ptu-feature reveal reveal-delay-1">
+          <div class="ptu-feature-icon">🏆</div>
+          <div class="ptu-feature-text">
+            <h4>Fundadores de PTU</h4>
+            <p>Diseñamos el estándar curricular y el marco de evaluación reconocido internacionalmente.</p>
+          </div>
+        </div>
+        <div class="ptu-feature reveal reveal-delay-2">
+          <div class="ptu-feature-icon">🎓</div>
+          <div class="ptu-feature-text">
+            <h4>Master Trainers Certificados</h4>
+            <p>Nuestros instructores son los únicos acreditados como Master Trainers de la certificación PTU.</p>
+          </div>
+        </div>
+        <div class="ptu-feature reveal reveal-delay-3">
+          <div class="ptu-feature-icon">🌎</div>
+          <div class="ptu-feature-text">
+            <h4>Alcance Internacional</h4>
+            <p>Profesionales certificados en múltiples países de Latinoamérica y creciendo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ptu-visual reveal">
+      <div class="ptu-cert-card">
+        <div class="ptu-logo-text">PTU</div>
+        <div class="ptu-sub-text">Performance Testing United</div>
+        <div class="ptu-ribbon">Certified Program</div>
+        <div class="ptu-stars">⭐⭐⭐⭐⭐</div>
+        <p style="margin-top:24px; font-size:0.82rem; color:var(--muted); line-height:1.7;">
+          La certificación que valida conocimiento real en pruebas de performance. Avalada por líderes de la industria.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOOLS ─── -->
+<section id="tools">
+  <div class="reveal" style="max-width:600px;">
+    <div class="section-label">Arsenal Técnico</div>
+    <h2 class="section-title">Las herramientas que dominamos.</h2>
+    <p class="section-desc">Trabajamos con las tecnologías líderes de la industria para cada disciplina de testing.</p>
+  </div>
+  <div class="tools-cats">
+    <div class="tool-category reveal">
+      <div class="tool-cat-label">Automatización Web & E2E</div>
+      <div class="tools-row">
+        <div class="tool-pill"><span class="tool-dot" style="background:#43B02A"></span> Selenium</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#17202C"></span> Cypress</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#2EAD33"></span> Playwright</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#e34c26"></span> TestNG</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#25A162"></span> Cucumber</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#C21325"></span> JUnit</div>
+      </div>
+    </div>
+    <div class="tool-category reveal">
+      <div class="tool-cat-label">Automatización Mobile</div>
+      <div class="tools-row">
+        <div class="tool-pill"><span class="tool-dot" style="background:#6929C4"></span> Appium</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#1565C0"></span> Detox</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#0DB7ED"></span> BrowserStack</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#FF6D00"></span> Sauce Labs</div>
+      </div>
+    </div>
+    <div class="tool-category reveal">
+      <div class="tool-cat-label">Performance Testing</div>
+      <div class="tools-row">
+        <div class="tool-pill"><span class="tool-dot" style="background:#D22128"></span> JMeter</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#FF6B35"></span> Gatling</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#7C3AED"></span> k6</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#F7A12A"></span> Locust</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#00B4D8"></span> BlazeMeter</div>
+      </div>
+    </div>
+    <div class="tool-category reveal">
+      <div class="tool-cat-label">Seguridad</div>
+      <div class="tools-row">
+        <div class="tool-pill"><span class="tool-dot" style="background:#E97627"></span> OWASP ZAP</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#FF6633"></span> Burp Suite</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#222222"></span> Nikto</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#1A1A2E"></span> Metasploit</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#00897B"></span> Nessus</div>
+      </div>
+    </div>
+    <div class="tool-category reveal">
+      <div class="tool-cat-label">Accesibilidad</div>
+      <div class="tools-row">
+        <div class="tool-pill"><span class="tool-dot" style="background:#005A9C"></span> axe DevTools</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#1A73E8"></span> Lighthouse</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#0078D7"></span> WAVE</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#107C10"></span> NVDA</div>
+        <div class="tool-pill"><span class="tool-dot" style="background:#E3001B"></span> Pa11y</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TRUSTED BY ─── -->
+<section id="trusted">
+  <div class="reveal">
+    <div class="section-label">Clientes</div>
+    <h2 class="section-title">Empresas que confían en nosotros.</h2>
+    <p class="section-desc" style="margin:0 auto;">Hemos trabajado con organizaciones de distintas industrias que eligieron la calidad como ventaja competitiva.</p>
+  </div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track" id="carousel-track">
+      <div class="client-card">Empresa A</div>
+      <div class="client-card">TechCorp</div>
+      <div class="client-card">Innova Labs</div>
+      <div class="client-card">FinStart</div>
+      <div class="client-card">Digital HQ</div>
+      <div class="client-card">SoftWave</div>
+      <div class="client-card">CloudBase</div>
+      <div class="client-card">NexGen</div>
+      <div class="client-card">Empresa A</div>
+      <div class="client-card">TechCorp</div>
+      <div class="client-card">Innova Labs</div>
+      <div class="client-card">FinStart</div>
+      <div class="client-card">Digital HQ</div>
+      <div class="client-card">SoftWave</div>
+      <div class="client-card">CloudBase</div>
+      <div class="client-card">NexGen</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section id="cta">
+  <div class="cta-glow"></div>
+  <div class="reveal">
+    <h2 class="cta-title">¿Listo para elevar<br />tu calidad?</h2>
+    <p class="cta-desc">Hablemos. Analizamos tu contexto y diseñamos una estrategia de QA que realmente funcione para tu equipo.</p>
+    <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:contacto@sqaadvisory.com" class="btn-primary">Escribenos ahora</a>
+      <a href="#principles" class="btn-ghost">Ver nuestros principios</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" />
+  </div>
+  <div class="footer-copy">© 2025 SQAAdvisory. All rights reserved.</div>
+  <div class="footer-links">
+    <a href="#services">Servicios</a>
+    <a href="#training">Capacitación</a>
+    <a href="#ptu">PTU</a>
+    <a href="#cta">Contacto</a>
+  </div>
+</footer>
+
+<script>
+  /* ─── PARTICLE CANVAS ─── */
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = ['#00e5ff', '#a855f7', '#22d3a0', '#f97316'];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.5 + 0.3,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      alpha: Math.random() * 0.5 + 0.1
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, W, H);
+    for (let p of particles) {
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0 || p.x > W) p.dx *= -1;
+      if (p.y < 0 || p.y > H) p.dy *= -1;
+    }
+
+    // Draw connecting lines
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.save();
+          ctx.globalAlpha = (1 - dist/120) * 0.12;
+          ctx.strokeStyle = '#00e5ff';
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  /* ─── NAV SCROLL ─── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ─── SCROLL REVEAL ─── */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ─── COUNTER ANIMATION ─── */
+  function animateCounters() {
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const text = el.textContent;
+      const num = parseInt(text.replace(/\D/g, ''));
+      if (isNaN(num)) return;
+      const prefix = text.match(/^[+#]/) ? text[0] : '';
+      let start = 0;
+      const step = num / 40;
+      const interval = setInterval(() => {
+        start += step;
+        if (start >= num) { start = num; clearInterval(interval); }
+        el.textContent = prefix + Math.floor(start);
+      }, 30);
+    });
+  }
+
+  const heroObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { animateCounters(); heroObserver.disconnect(); }
+  }, { threshold: 0.5 });
+  heroObserver.observe(document.querySelector('.hero-stats'));
+
+  /* ─── SMOOTH HOVER GLOW on principle cards ─── */
+  document.querySelectorAll('.principle-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mouse-x', x + '%');
+      card.style.setProperty('--mouse-y', y + '%');
+    });
+  });
+</script>
+</body>
 </html>
