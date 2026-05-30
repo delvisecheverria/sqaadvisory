@@ -76,7 +76,7 @@
     .vc-dot:nth-child(2){background:#febc2e}
     .vc-dot:nth-child(3){background:#28c840}
     .vc-filename{margin-left:8px;font-size:0.78rem;color:var(--muted);font-family:monospace}
-    .code-panel{display:none;padding:28px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.8;overflow-x:auto}
+    .code-panel{display:none;min-height:520px;padding:28px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.8;overflow-x:auto}
     .code-panel.active{display:block}
     .cb-comment{color:#4a5568}.cb-keyword{color:var(--purple)}.cb-fn{color:var(--cyan)}.cb-string{color:var(--green)}.cb-number{color:var(--orange)}.cb-type{color:#f97316}
     .cb-cursor{display:inline-block;width:2px;height:1em;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:text-bottom}
@@ -138,7 +138,7 @@
     .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
-    @media(max-width:900px){.services-inner,.ptu-inner{grid-template-columns:1fr;gap:48px}.services-visual{position:static}.nav-links{display:none}}
+    @media(max-width:900px){.services-inner,.ptu-inner{grid-template-columns:1fr;gap:48px}.services-visual{position:static}.code-panel{min-height:360px}.nav-links{display:none}}
     @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}}
   </style>
 </head>
@@ -462,14 +462,14 @@
     <h2 class="cta-title">Ready to elevate<br/>your quality?</h2>
     <p class="cta-desc">Let's talk. We analyze your context and design a QA strategy that actually works for your team.</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="mailto:contacto@sqaadvisory.com" class="btn-primary">Write to us</a>
+      <a href="mailto:info@sqaadvisory.com" class="btn-primary">Write to us</a>
       <a href="#principles" class="btn-ghost">See our principles</a>
     </div>
   </div>
 </section>
 <footer>
   <div class="footer-logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
-  <div class="footer-copy">© 2025 SQAAdvisory. All rights reserved.</div>
+  <div class="footer-copy">© 2026 SQAAdvisory. All rights reserved.</div>
   <div class="footer-links">
     <a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
   </div>
