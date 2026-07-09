@@ -136,7 +136,8 @@
     .cta-desc{color:var(--muted);font-size:1.05rem;max-width:480px;margin:0 auto 40px;line-height:1.75}
     footer{background:var(--bg2);border-top:1px solid var(--border);padding:48px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
     .footer-logo img{height:28px;width:auto}
-    .footer-copy{font-size:0.82rem;color:var(--muted)}
+    .footer-copy{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:0.82rem;color:var(--muted)}
+    .footer-copy .footer-tagline{color:rgba(226,232,240,0.72)}
     .footer-links{display:flex;gap:24px}
     .footer-links a{font-size:0.82rem;color:var(--muted);text-decoration:none;transition:color 0.2s}
     .footer-links a:hover{color:var(--text)}
@@ -167,7 +168,7 @@
     .ivv-understanding-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.3px}
     .ivv-understanding-desc{color:var(--muted);font-size:0.88rem;line-height:1.7}
     @media(max-width:900px){.services-inner,.ptu-inner,.advisory-inner{grid-template-columns:1fr;gap:48px}.services-visual,.advisory-copy{position:static}.advisory-grid,.ivv-services,.ivv-understanding{grid-template-columns:1fr}.code-panel{min-height:360px}.nav-links{display:none}}
-    @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}}
+    @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}.footer-copy{justify-content:center}}
   </style>
 </head>
 <body>
@@ -176,7 +177,6 @@
   <div class="logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <ul class="nav-links">
     <li><a href="#principles">Principles</a></li>
-    <li><a href="#advisory">Advisory</a></li>
     <li><a href="#ivv">IV&amp;V</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#training">Training</a></li>
@@ -230,54 +230,6 @@
       <div class="principle-tag">Principle IV</div>
       <div class="principle-name">Be Accessible</div>
       <p class="principle-desc">Quality software is software for everyone. We apply WCAG standards to ensure your products are inclusive and accessible to every type of user.</p>
-    </div>
-  </div>
-</section>
-<section id="advisory">
-  <div class="advisory-inner">
-    <div class="advisory-copy reveal">
-      <div class="section-label">Strategic Advisory</div>
-      <h2 class="section-title">Quality Engineering Advisory.</h2>
-      <p class="section-desc">We help organizations build and mature their Software Quality Assurance capabilities through assessment, strategy, implementation, and continuous improvement.</p>
-      <p class="section-desc">Whether your organization is modernizing legacy systems, adopting Agile or DevOps, or expanding digital services, we work alongside your teams to establish sustainable quality practices that reduce risk and improve software delivery.</p>
-      <div class="advisory-badges">
-        <span class="advisory-badge">Assessment</span>
-        <span class="advisory-badge">Strategy</span>
-        <span class="advisory-badge">Governance</span>
-        <span class="advisory-badge">Transformation</span>
-      </div>
-    </div>
-    <div class="advisory-grid">
-      <div class="advisory-card reveal reveal-delay-1">
-        <div class="advisory-icon"><i data-lucide="clipboard-check"></i></div>
-        <div class="advisory-title">QA Assessments &amp; Maturity Evaluations</div>
-        <p class="advisory-desc">Evaluate current QA processes, tools, governance, and delivery practices to identify risks, gaps, and improvement opportunities.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-2">
-        <div class="advisory-icon"><i data-lucide="map"></i></div>
-        <div class="advisory-title">QA Strategy &amp; Roadmap</div>
-        <p class="advisory-desc">Define a practical quality roadmap aligned with business goals, standards, KPIs, testing policies, and governance.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-3">
-        <div class="advisory-icon"><i data-lucide="workflow"></i></div>
-        <div class="advisory-title">QA Process Implementation</div>
-        <p class="advisory-desc">Integrate quality practices across the SDLC and embed QA into Agile, Scrum, DevOps, and CI/CD workflows.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-4">
-        <div class="advisory-icon"><i data-lucide="refresh-cw"></i></div>
-        <div class="advisory-title">Quality Engineering Transformation</div>
-        <p class="advisory-desc">Move from traditional testing to modern Quality Engineering through automation, collaboration, and continuous quality.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-1">
-        <div class="advisory-icon"><i data-lucide="messages-square"></i></div>
-        <div class="advisory-title">QA Coaching &amp; Advisory</div>
-        <p class="advisory-desc">Mentor QA leaders, managers, and engineering teams while supporting organizational change and adoption of best practices.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-2">
-        <div class="advisory-icon"><i data-lucide="building-2"></i></div>
-        <div class="advisory-title">Testing Center of Excellence</div>
-        <p class="advisory-desc">Design and implement QA Centers of Excellence with clear roles, responsibilities, governance, and quality metrics.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -481,6 +433,54 @@
     </div>
   </div>
 </section>
+<section id="advisory">
+  <div class="advisory-inner">
+    <div class="advisory-copy reveal">
+      <div class="section-label">Strategic Advisory</div>
+      <h2 class="section-title">Quality Engineering Advisory.</h2>
+      <p class="section-desc">We help organizations build and mature their Software Quality Assurance capabilities through assessment, strategy, implementation, and continuous improvement.</p>
+      <p class="section-desc">Whether your organization is modernizing legacy systems, adopting Agile or DevOps, or expanding digital services, we work alongside your teams to establish sustainable quality practices that reduce risk and improve software delivery.</p>
+      <div class="advisory-badges">
+        <span class="advisory-badge">Assessment</span>
+        <span class="advisory-badge">Strategy</span>
+        <span class="advisory-badge">Governance</span>
+        <span class="advisory-badge">Transformation</span>
+      </div>
+    </div>
+    <div class="advisory-grid">
+      <div class="advisory-card reveal reveal-delay-1">
+        <div class="advisory-icon"><i data-lucide="clipboard-check"></i></div>
+        <div class="advisory-title">QA Assessments &amp; Maturity Evaluations</div>
+        <p class="advisory-desc">Evaluate current QA processes, tools, governance, and delivery practices to identify risks, gaps, and improvement opportunities.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-2">
+        <div class="advisory-icon"><i data-lucide="map"></i></div>
+        <div class="advisory-title">QA Strategy &amp; Roadmap</div>
+        <p class="advisory-desc">Define a practical quality roadmap aligned with business goals, standards, KPIs, testing policies, and governance.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-3">
+        <div class="advisory-icon"><i data-lucide="workflow"></i></div>
+        <div class="advisory-title">QA Process Implementation</div>
+        <p class="advisory-desc">Integrate quality practices across the SDLC and embed QA into Agile, Scrum, DevOps, and CI/CD workflows.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-4">
+        <div class="advisory-icon"><i data-lucide="refresh-cw"></i></div>
+        <div class="advisory-title">Quality Engineering Transformation</div>
+        <p class="advisory-desc">Move from traditional testing to modern Quality Engineering through automation, collaboration, and continuous quality.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-1">
+        <div class="advisory-icon"><i data-lucide="messages-square"></i></div>
+        <div class="advisory-title">QA Coaching &amp; Advisory</div>
+        <p class="advisory-desc">Mentor QA leaders, managers, and engineering teams while supporting organizational change and adoption of best practices.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-2">
+        <div class="advisory-icon"><i data-lucide="building-2"></i></div>
+        <div class="advisory-title">Testing Center of Excellence</div>
+        <p class="advisory-desc">Design and implement QA Centers of Excellence with clear roles, responsibilities, governance, and quality metrics.</p>
+      </div>
+    </div>
+  </div>
+</section>
 <section id="training">
   <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
     <div class="section-label">Training</div>
@@ -658,9 +658,12 @@
 </section>
 <footer>
   <div class="footer-logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
-  <div class="footer-copy">© 2026 SQAAdvisory. All rights reserved.</div>
+  <div class="footer-copy">
+    <span>© 2026 SQAAdvisory. All rights reserved.</span>
+    <span class="footer-tagline">Helping elevate software quality from Florida, the Sunshine State.</span>
+  </div>
   <div class="footer-links">
-    <a href="#advisory">Advisory</a><a href="#ivv">IV&amp;V</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
+    <a href="#ivv">IV&amp;V</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
   </div>
 </footer>
 <script>
