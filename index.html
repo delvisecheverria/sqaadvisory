@@ -138,7 +138,21 @@
     .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
-    @media(max-width:900px){.services-inner,.ptu-inner{grid-template-columns:1fr;gap:48px}.services-visual{position:static}.code-panel{min-height:360px}.nav-links{display:none}}
+    #advisory{padding:120px 5%;background:linear-gradient(180deg,var(--bg),var(--bg2));overflow:hidden}
+    .advisory-inner{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:70px;align-items:start}
+    .advisory-copy{position:sticky;top:120px}
+    .advisory-copy .section-desc+.section-desc{margin-top:18px}
+    .advisory-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+    .advisory-badge{padding:8px 14px;border:1px solid rgba(0,229,255,0.18);border-radius:50px;background:rgba(0,229,255,0.05);color:var(--cyan);font-size:0.76rem;font-weight:700}
+    .advisory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .advisory-card{position:relative;min-height:230px;padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:rgba(255,255,255,0.035);overflow:hidden;transition:transform 0.3s,border-color 0.3s,background 0.3s}
+    .advisory-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 0%,rgba(0,229,255,0.14),transparent 45%);opacity:0;transition:opacity 0.3s}
+    .advisory-card:hover{transform:translateY(-5px);border-color:rgba(0,229,255,0.32);background:rgba(0,229,255,0.045)}
+    .advisory-card:hover::before{opacity:1}
+    .advisory-icon{position:relative;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan)}
+    .advisory-title{position:relative;font-family:'Space Grotesk',sans-serif;font-size:1.12rem;font-weight:800;letter-spacing:-0.2px;margin-bottom:10px}
+    .advisory-desc{position:relative;color:var(--muted);font-size:0.86rem;line-height:1.7}
+    @media(max-width:900px){.services-inner,.ptu-inner,.advisory-inner{grid-template-columns:1fr;gap:48px}.services-visual,.advisory-copy{position:static}.advisory-grid{grid-template-columns:1fr}.code-panel{min-height:360px}.nav-links{display:none}}
     @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}}
   </style>
 </head>
@@ -148,6 +162,7 @@
   <div class="logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <ul class="nav-links">
     <li><a href="#principles">Principles</a></li>
+    <li><a href="#advisory">Advisory</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#training">Training</a></li>
     <li><a href="#ptu">PTU</a></li>
@@ -200,6 +215,54 @@
       <div class="principle-tag">Principle IV</div>
       <div class="principle-name">Be Accessible</div>
       <p class="principle-desc">Quality software is software for everyone. We apply WCAG standards to ensure your products are inclusive and accessible to every type of user.</p>
+    </div>
+  </div>
+</section>
+<section id="advisory">
+  <div class="advisory-inner">
+    <div class="advisory-copy reveal">
+      <div class="section-label">Strategic Advisory</div>
+      <h2 class="section-title">Quality Engineering Advisory.</h2>
+      <p class="section-desc">We help organizations build and mature their Software Quality Assurance capabilities through assessment, strategy, implementation, and continuous improvement.</p>
+      <p class="section-desc">Whether your organization is modernizing legacy systems, adopting Agile or DevOps, or expanding digital services, we work alongside your teams to establish sustainable quality practices that reduce risk and improve software delivery.</p>
+      <div class="advisory-badges">
+        <span class="advisory-badge">Assessment</span>
+        <span class="advisory-badge">Strategy</span>
+        <span class="advisory-badge">Governance</span>
+        <span class="advisory-badge">Transformation</span>
+      </div>
+    </div>
+    <div class="advisory-grid">
+      <div class="advisory-card reveal reveal-delay-1">
+        <div class="advisory-icon"><i data-lucide="clipboard-check"></i></div>
+        <div class="advisory-title">QA Assessments &amp; Maturity Evaluations</div>
+        <p class="advisory-desc">Evaluate current QA processes, tools, governance, and delivery practices to identify risks, gaps, and improvement opportunities.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-2">
+        <div class="advisory-icon"><i data-lucide="map"></i></div>
+        <div class="advisory-title">QA Strategy &amp; Roadmap</div>
+        <p class="advisory-desc">Define a practical quality roadmap aligned with business goals, standards, KPIs, testing policies, and governance.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-3">
+        <div class="advisory-icon"><i data-lucide="workflow"></i></div>
+        <div class="advisory-title">QA Process Implementation</div>
+        <p class="advisory-desc">Integrate quality practices across the SDLC and embed QA into Agile, Scrum, DevOps, and CI/CD workflows.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-4">
+        <div class="advisory-icon"><i data-lucide="refresh-cw"></i></div>
+        <div class="advisory-title">Quality Engineering Transformation</div>
+        <p class="advisory-desc">Move from traditional testing to modern Quality Engineering through automation, collaboration, and continuous quality.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-1">
+        <div class="advisory-icon"><i data-lucide="messages-square"></i></div>
+        <div class="advisory-title">QA Coaching &amp; Advisory</div>
+        <p class="advisory-desc">Mentor QA leaders, managers, and engineering teams while supporting organizational change and adoption of best practices.</p>
+      </div>
+      <div class="advisory-card reveal reveal-delay-2">
+        <div class="advisory-icon"><i data-lucide="building-2"></i></div>
+        <div class="advisory-title">Testing Center of Excellence</div>
+        <p class="advisory-desc">Design and implement QA Centers of Excellence with clear roles, responsibilities, governance, and quality metrics.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -526,11 +589,11 @@
   <div class="footer-logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <div class="footer-copy">© 2026 SQAAdvisory. All rights reserved.</div>
   <div class="footer-links">
-    <a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
+    <a href="#advisory">Advisory</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
   </div>
 </footer>
 <script>
-  lucide.createIcons();
+  if (window.lucide) lucide.createIcons();
   const canvas=document.getElementById('particle-canvas'),ctx=canvas.getContext('2d');
   let W,H,particles=[];
   function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
