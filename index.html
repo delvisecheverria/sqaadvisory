@@ -157,7 +157,16 @@
     .advisory-icon{position:relative;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan)}
     .advisory-title{position:relative;font-family:'Space Grotesk',sans-serif;font-size:1.12rem;font-weight:800;letter-spacing:-0.2px;margin-bottom:10px}
     .advisory-desc{position:relative;color:var(--muted);font-size:0.86rem;line-height:1.7}
-    @media(max-width:900px){.services-inner,.ptu-inner,.advisory-inner{grid-template-columns:1fr;gap:48px}.services-visual,.advisory-copy{position:static}.advisory-grid{grid-template-columns:1fr}.code-panel{min-height:360px}.nav-links{display:none}}
+    #ivv{padding:120px 5%;background:var(--bg2);overflow:hidden}
+    .ivv-services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:34px}
+    .ivv-service{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,0.035);color:var(--text);font-size:0.86rem;font-weight:700}
+    .ivv-service i{width:17px;height:17px;color:var(--green);flex-shrink:0}
+    .ivv-understanding{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:56px}
+    .ivv-understanding-card{min-height:220px;padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,rgba(34,211,160,0.06),rgba(0,229,255,0.035))}
+    .ivv-understanding-label{font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px}
+    .ivv-understanding-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.3px}
+    .ivv-understanding-desc{color:var(--muted);font-size:0.88rem;line-height:1.7}
+    @media(max-width:900px){.services-inner,.ptu-inner,.advisory-inner{grid-template-columns:1fr;gap:48px}.services-visual,.advisory-copy{position:static}.advisory-grid,.ivv-services,.ivv-understanding{grid-template-columns:1fr}.code-panel{min-height:360px}.nav-links{display:none}}
     @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}}
   </style>
 </head>
@@ -168,6 +177,7 @@
   <ul class="nav-links">
     <li><a href="#principles">Principles</a></li>
     <li><a href="#advisory">Advisory</a></li>
+    <li><a href="#ivv">IV&amp;V</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#training">Training</a></li>
     <li><a href="#ptu">PTU</a></li>
@@ -268,6 +278,56 @@
         <div class="advisory-title">Testing Center of Excellence</div>
         <p class="advisory-desc">Design and implement QA Centers of Excellence with clear roles, responsibilities, governance, and quality metrics.</p>
       </div>
+    </div>
+  </div>
+</section>
+<section id="ivv">
+  <div class="advisory-inner">
+    <div class="advisory-copy reveal">
+      <div class="section-label">Independent Assurance</div>
+      <h2 class="section-title">Independent Verification &amp; Validation.</h2>
+      <p class="section-desc">Independent oversight. Trusted assurance.</p>
+      <p class="section-desc">Independent Verification &amp; Validation provides organizations with an objective assessment of software projects throughout the SDLC. We help reduce project risk, validate software quality, verify compliance with business and technical requirements, and provide stakeholders with an independent view of project health.</p>
+      <p class="section-desc">Our goal is to increase confidence that software solutions are delivered on time, meet business expectations, and are ready for successful deployment.</p>
+      <div class="advisory-badges">
+        <span class="advisory-badge">Objective Oversight</span>
+        <span class="advisory-badge">Risk Reduction</span>
+        <span class="advisory-badge">Release Confidence</span>
+      </div>
+    </div>
+    <div>
+      <div class="reveal">
+        <div class="section-label">Our IV&amp;V Services</div>
+        <h3 class="advisory-title" style="font-size:1.6rem;margin-bottom:10px;">Independent quality visibility across the project lifecycle.</h3>
+        <p class="advisory-desc">We provide independent assessment, oversight, and reporting so leaders can act on quality risks before they become delivery problems.</p>
+      </div>
+      <div class="ivv-services">
+        <div class="ivv-service reveal reveal-delay-1"><i data-lucide="check-circle-2"></i>Requirements Verification</div>
+        <div class="ivv-service reveal reveal-delay-2"><i data-lucide="check-circle-2"></i>Solution Validation</div>
+        <div class="ivv-service reveal reveal-delay-3"><i data-lucide="check-circle-2"></i>Quality &amp; Process Assessments</div>
+        <div class="ivv-service reveal reveal-delay-4"><i data-lucide="check-circle-2"></i>Independent Testing Oversight</div>
+        <div class="ivv-service reveal reveal-delay-1"><i data-lucide="check-circle-2"></i>Risk &amp; Compliance Reviews</div>
+        <div class="ivv-service reveal reveal-delay-2"><i data-lucide="check-circle-2"></i>Release Readiness Assessments</div>
+        <div class="ivv-service reveal reveal-delay-3"><i data-lucide="check-circle-2"></i>Project Governance &amp; Quality Oversight</div>
+        <div class="ivv-service reveal reveal-delay-4"><i data-lucide="check-circle-2"></i>Executive Quality Reporting</div>
+      </div>
+    </div>
+  </div>
+  <div class="ivv-understanding">
+    <div class="ivv-understanding-card reveal reveal-delay-1">
+      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
+      <div class="ivv-understanding-title">Verification</div>
+      <p class="ivv-understanding-desc">Ensuring the solution is built correctly according to requirements, standards, and specifications.</p>
+    </div>
+    <div class="ivv-understanding-card reveal reveal-delay-2">
+      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
+      <div class="ivv-understanding-title">Validation</div>
+      <p class="ivv-understanding-desc">Ensuring the organization is building the right solution to meet business and user needs.</p>
+    </div>
+    <div class="ivv-understanding-card reveal reveal-delay-3">
+      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
+      <div class="ivv-understanding-title">Independent Assurance</div>
+      <p class="ivv-understanding-desc">Providing objective oversight, risk analysis, quality assessments, and actionable recommendations throughout the project lifecycle.</p>
     </div>
   </div>
 </section>
@@ -600,7 +660,7 @@
   <div class="footer-logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.2rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <div class="footer-copy">© 2026 SQAAdvisory. All rights reserved.</div>
   <div class="footer-links">
-    <a href="#advisory">Advisory</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
+    <a href="#advisory">Advisory</a><a href="#ivv">IV&amp;V</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
   </div>
 </footer>
 <script>
