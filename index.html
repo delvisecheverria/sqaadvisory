@@ -62,61 +62,24 @@
     .principle-name{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:12px;letter-spacing:-0.5px}
     .principle-desc{color:var(--muted);font-size:0.9rem;line-height:1.7}
     #services{padding:120px 5%;background:var(--bg2)}
-    .services-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-    .services-list{display:flex;flex-direction:column;gap:12px;margin-top:48px}
-    .service-item{display:flex;align-items:flex-start;gap:20px;padding:20px 24px;border:1px solid var(--border);border-radius:var(--radius);background:var(--glass);transition:border-color 0.3s,transform 0.3s,background 0.3s;cursor:pointer}
-    .service-item:hover,.service-item.active{border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.05);transform:translateX(6px)}
-    .service-icon{width:44px;height:44px;flex-shrink:0;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--glass);border:1px solid var(--border);color:var(--cyan)}
-    .service-name{font-weight:700;font-size:1rem;margin-bottom:4px}
-    .service-desc{font-size:0.85rem;color:var(--muted);line-height:1.6}
-    .service-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .services-header{max-width:760px;margin-bottom:56px}
+    .service-lines{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+    .service-line-card{position:relative;display:flex;flex-direction:column;min-height:620px;padding:34px;border:1px solid var(--border);border-radius:var(--radius);background:rgba(255,255,255,0.035);overflow:hidden;transition:transform 0.3s,border-color 0.3s,background 0.3s}
+    .service-line-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 18% 0%,var(--service-color),transparent 52%);opacity:0.08}
+    .service-line-card:hover{transform:translateY(-6px);border-color:rgba(0,229,255,0.28);background:rgba(255,255,255,0.05)}
+    .service-line-card[data-color="cyan"]{--service-color:rgba(0,229,255,0.5)}
+    .service-line-card[data-color="green"]{--service-color:rgba(34,211,160,0.48)}
+    .service-line-card[data-color="purple"]{--service-color:rgba(168,85,247,0.5)}
+    .service-line-icon{position:relative;width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan)}
+    .service-line-title{position:relative;font-family:'Space Grotesk',sans-serif;font-size:1.55rem;font-weight:800;line-height:1.12;letter-spacing:-0.5px;margin-bottom:14px}
+    .service-line-desc{position:relative;color:var(--muted);font-size:0.95rem;line-height:1.75;margin-bottom:26px}
+    .service-line-list{position:relative;display:flex;flex-direction:column;gap:10px;margin-bottom:30px}
+    .service-line-list span{display:flex;align-items:flex-start;gap:9px;color:var(--text);font-size:0.83rem;line-height:1.45}
+    .service-line-list span::before{content:'';width:6px;height:6px;margin-top:7px;border-radius:50%;background:var(--cyan);flex-shrink:0}
+    .service-line-card .btn-ghost{position:relative;margin-top:auto;width:max-content}
     .tag{padding:3px 10px;background:var(--glass);border:1px solid var(--border);border-radius:50px;font-size:0.72rem;color:var(--muted);font-weight:500}
-    .services-visual{position:sticky;top:120px}
-    .visual-card{border-radius:24px;background:var(--bg3);border:1px solid var(--border);overflow:hidden}
-    .vc-header{display:flex;align-items:center;gap:8px;padding:16px 20px;border-bottom:1px solid var(--border)}
-    .vc-dot{width:12px;height:12px;border-radius:50%}
-    .vc-dot:nth-child(1){background:#ff5f57}
-    .vc-dot:nth-child(2){background:#febc2e}
-    .vc-dot:nth-child(3){background:#28c840}
-    .vc-filename{margin-left:8px;font-size:0.78rem;color:var(--muted);font-family:monospace}
-    .code-panel{display:none;min-height:520px;padding:28px;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.8;white-space:pre;overflow-x:auto}
-    .code-panel.active{display:block}
-    .cb-comment{color:#4a5568}.cb-keyword{color:var(--purple)}.cb-fn{color:var(--cyan)}.cb-string{color:var(--green)}.cb-number{color:var(--orange)}.cb-type{color:#f97316}
-    .cb-cursor{display:inline-block;width:2px;height:1em;background:var(--cyan);animation:blink 1s step-end infinite;vertical-align:text-bottom}
+    .tag{padding:3px 10px;background:var(--glass);border:1px solid var(--border);border-radius:50px;font-size:0.72rem;color:var(--muted);font-weight:500}
     @keyframes blink{50%{opacity:0}}
-    #training{padding:120px 5%}
-    .training-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:60px}
-    .training-card{position:relative;border-radius:var(--radius);border:1px solid var(--border);background:var(--glass);padding:40px 36px;overflow:hidden;transition:transform 0.3s}
-    .training-card:hover{transform:translateY(-6px)}
-    .training-card.featured{border-color:rgba(168,85,247,0.4);background:linear-gradient(135deg,rgba(168,85,247,0.06),rgba(0,229,255,0.04))}
-    .featured-badge{position:absolute;top:20px;right:20px;padding:4px 12px;background:linear-gradient(135deg,var(--purple),var(--cyan));border-radius:50px;font-size:0.7rem;font-weight:700;color:#fff}
-    .training-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan);margin-bottom:20px}
-    .training-title{font-family:'Space Grotesk',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:10px;letter-spacing:-0.3px}
-    .training-desc{color:var(--muted);font-size:0.88rem;line-height:1.7}
-    .training-highlights{margin-top:20px;display:flex;flex-direction:column;gap:8px}
-    .highlight-item{display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)}
-    .highlight-item::before{content:'→';color:var(--cyan);font-weight:700}
-    #ptu{padding:120px 5%;background:var(--bg2)}
-    .ptu-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-    .ptu-badge-big{display:inline-block;padding:8px 20px;background:linear-gradient(135deg,rgba(249,115,22,0.15),rgba(168,85,247,0.15));border:1px solid rgba(249,115,22,0.3);border-radius:50px;font-size:0.78rem;font-weight:700;letter-spacing:1.5px;color:var(--orange);text-transform:uppercase;margin-bottom:20px}
-    .ptu-cert-card{background:linear-gradient(135deg,var(--bg3),#1a0e2e);border:1px solid rgba(168,85,247,0.3);border-radius:24px;padding:48px;text-align:center;position:relative;overflow:hidden}
-    .ptu-cert-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(168,85,247,0.08) 0%,transparent 60%)}
-    .ptu-logo-text{font-family:'Space Grotesk',sans-serif;font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--orange),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;margin-bottom:8px}
-    .ptu-sub-text{font-size:0.85rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px}
-    .ptu-ribbon{display:inline-block;padding:6px 18px;background:linear-gradient(135deg,var(--orange),var(--pink));border-radius:50px;font-size:0.78rem;font-weight:700;color:#fff;margin-bottom:28px}
-    .ptu-stars{display:flex;justify-content:center;gap:6px;color:var(--orange)}
-    .ptu-features{display:flex;flex-direction:column;gap:16px;margin-top:40px}
-    .ptu-feature{display:flex;gap:16px;align-items:flex-start}
-    .ptu-feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.2);flex-shrink:0;color:var(--orange)}
-    .ptu-feature-text h4{font-size:0.95rem;font-weight:600;margin-bottom:2px}
-    .ptu-feature-text p{font-size:0.82rem;color:var(--muted);line-height:1.6}
-    #tools{padding:120px 5%}
-    .tools-cats{display:flex;flex-direction:column;gap:48px;margin-top:60px}
-    .tool-cat-label{font-size:0.75rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:20px;text-align:center}
-    .tools-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
-    .tool-pill{display:flex;align-items:center;gap:10px;padding:12px 20px;border:1px solid var(--border);border-radius:50px;background:var(--glass);font-size:0.875rem;font-weight:500;transition:border-color 0.2s,background 0.2s,transform 0.2s;cursor:default}
-    .tool-pill:hover{transform:translateY(-3px);background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15)}
-    .tool-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
     #trusted{padding:120px 5%;background:var(--bg2);text-align:center}
     .carousel-wrapper{overflow:hidden;margin-top:56px;position:relative}
     .carousel-wrapper::before,.carousel-wrapper::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2}
@@ -144,30 +107,8 @@
     .reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:0.1s}.reveal-delay-2{transition-delay:0.2s}.reveal-delay-3{transition-delay:0.3s}.reveal-delay-4{transition-delay:0.4s}
-    #advisory{padding:120px 5%;background:linear-gradient(180deg,var(--bg),var(--bg2));overflow:hidden}
-    .advisory-inner{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:70px;align-items:start}
-    .advisory-copy{position:sticky;top:120px}
-    .advisory-copy .section-desc+.section-desc{margin-top:18px}
-    .advisory-badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
-    .advisory-badge{padding:8px 14px;border:1px solid rgba(0,229,255,0.18);border-radius:50px;background:rgba(0,229,255,0.05);color:var(--cyan);font-size:0.76rem;font-weight:700}
-    .advisory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-    .advisory-card{position:relative;min-height:230px;padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:rgba(255,255,255,0.035);overflow:hidden;transition:transform 0.3s,border-color 0.3s,background 0.3s}
-    .advisory-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 0%,rgba(0,229,255,0.14),transparent 45%);opacity:0;transition:opacity 0.3s}
-    .advisory-card:hover{transform:translateY(-5px);border-color:rgba(0,229,255,0.32);background:rgba(0,229,255,0.045)}
-    .advisory-card:hover::before{opacity:1}
-    .advisory-icon{position:relative;width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:22px;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--cyan)}
-    .advisory-title{position:relative;font-family:'Space Grotesk',sans-serif;font-size:1.12rem;font-weight:800;letter-spacing:-0.2px;margin-bottom:10px}
-    .advisory-desc{position:relative;color:var(--muted);font-size:0.86rem;line-height:1.7}
-    #ivv{padding:120px 5%;background:var(--bg2);overflow:hidden}
-    .ivv-services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:34px}
-    .ivv-service{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,0.035);color:var(--text);font-size:0.86rem;font-weight:700}
-    .ivv-service i{width:17px;height:17px;color:var(--green);flex-shrink:0}
-    .ivv-understanding{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:56px}
-    .ivv-understanding-card{min-height:220px;padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,rgba(34,211,160,0.06),rgba(0,229,255,0.035))}
-    .ivv-understanding-label{font-size:0.72rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px}
-    .ivv-understanding-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:10px;letter-spacing:-0.3px}
-    .ivv-understanding-desc{color:var(--muted);font-size:0.88rem;line-height:1.7}
-    @media(max-width:900px){.services-inner,.ptu-inner,.advisory-inner{grid-template-columns:1fr;gap:48px}.services-visual,.advisory-copy{position:static}.advisory-grid,.ivv-services,.ivv-understanding{grid-template-columns:1fr}.code-panel{min-height:360px}.nav-links{display:none}}
+    @media(max-width:1100px){.service-lines{grid-template-columns:1fr}.service-line-card{min-height:auto}}
+    @media(max-width:900px){.nav-links{display:none}}
     @media(max-width:600px){h1{letter-spacing:-1.5px}footer{flex-direction:column;text-align:center}.footer-copy{justify-content:center}}
   </style>
 </head>
@@ -177,11 +118,7 @@
   <div class="logo"><img src="logo.png" alt="SQAAdvisory" onerror="this.outerHTML='<span style=\'font-family:Space Grotesk,sans-serif;font-size:1.4rem;font-weight:700;\'>SQA<span style=\'color:var(--cyan)\'>Advisory</span></span>'" /></div>
   <ul class="nav-links">
     <li><a href="#principles">Principles</a></li>
-    <li><a href="#ivv">IV&amp;V</a></li>
     <li><a href="#services">Services</a></li>
-    <li><a href="#training">Training</a></li>
-    <li><a href="#ptu">PTU</a></li>
-    <li><a href="#tools">Tools</a></li>
     <li><a href="#trusted">Clients</a></li>
   </ul>
   <a href="#cta" class="nav-cta">Contact us</a>
@@ -233,379 +170,66 @@
     </div>
   </div>
 </section>
-<section id="ivv">
-  <div class="advisory-inner">
-    <div class="advisory-copy reveal">
-      <div class="section-label">Independent Assurance</div>
-      <h2 class="section-title">Independent Verification &amp; Validation.</h2>
-      <p class="section-desc">Independent oversight. Trusted assurance.</p>
-      <p class="section-desc">Independent Verification &amp; Validation provides organizations with an objective assessment of software projects throughout the SDLC. We help reduce project risk, validate software quality, verify compliance with business and technical requirements, and provide stakeholders with an independent view of project health.</p>
-      <p class="section-desc">Our goal is to increase confidence that software solutions are delivered on time, meet business expectations, and are ready for successful deployment.</p>
-      <div class="advisory-badges">
-        <span class="advisory-badge">Objective Oversight</span>
-        <span class="advisory-badge">Risk Reduction</span>
-        <span class="advisory-badge">Release Confidence</span>
-      </div>
-    </div>
-    <div>
-      <div class="reveal">
-        <div class="section-label">Our IV&amp;V Services</div>
-        <h3 class="advisory-title" style="font-size:1.6rem;margin-bottom:10px;">Independent quality visibility across the project lifecycle.</h3>
-        <p class="advisory-desc">We provide independent assessment, oversight, and reporting so leaders can act on quality risks before they become delivery problems.</p>
-      </div>
-      <div class="ivv-services">
-        <div class="ivv-service reveal reveal-delay-1"><i data-lucide="check-circle-2"></i>Requirements Verification</div>
-        <div class="ivv-service reveal reveal-delay-2"><i data-lucide="check-circle-2"></i>Solution Validation</div>
-        <div class="ivv-service reveal reveal-delay-3"><i data-lucide="check-circle-2"></i>Quality &amp; Process Assessments</div>
-        <div class="ivv-service reveal reveal-delay-4"><i data-lucide="check-circle-2"></i>Independent Testing Oversight</div>
-        <div class="ivv-service reveal reveal-delay-1"><i data-lucide="check-circle-2"></i>Risk &amp; Compliance Reviews</div>
-        <div class="ivv-service reveal reveal-delay-2"><i data-lucide="check-circle-2"></i>Release Readiness Assessments</div>
-        <div class="ivv-service reveal reveal-delay-3"><i data-lucide="check-circle-2"></i>Project Governance &amp; Quality Oversight</div>
-        <div class="ivv-service reveal reveal-delay-4"><i data-lucide="check-circle-2"></i>Executive Quality Reporting</div>
-      </div>
-    </div>
-  </div>
-  <div class="ivv-understanding">
-    <div class="ivv-understanding-card reveal reveal-delay-1">
-      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
-      <div class="ivv-understanding-title">Verification</div>
-      <p class="ivv-understanding-desc">Ensuring the solution is built correctly according to requirements, standards, and specifications.</p>
-    </div>
-    <div class="ivv-understanding-card reveal reveal-delay-2">
-      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
-      <div class="ivv-understanding-title">Validation</div>
-      <p class="ivv-understanding-desc">Ensuring the organization is building the right solution to meet business and user needs.</p>
-    </div>
-    <div class="ivv-understanding-card reveal reveal-delay-3">
-      <div class="ivv-understanding-label">Understanding IV&amp;V</div>
-      <div class="ivv-understanding-title">Independent Assurance</div>
-      <p class="ivv-understanding-desc">Providing objective oversight, risk analysis, quality assessments, and actionable recommendations throughout the project lifecycle.</p>
-    </div>
-  </div>
-</section>
 <section id="services">
-  <div class="services-inner">
-    <div>
-      <div class="reveal">
-        <div class="section-label">Services</div>
-        <h2 class="section-title">What we do best.</h2>
-        <p class="section-desc">We cover the full software quality cycle. Click a service to see it in action.</p>
-      </div>
-      <div class="services-list">
-        <div class="service-item active reveal reveal-delay-1" data-service="functional">
-          <div class="service-icon"><i data-lucide="search"></i></div>
-          <div><div class="service-name">Functional Testing</div><div class="service-desc">Manual and automated testing, smoke, regression, integration and end-to-end.</div><div class="service-tags"><span class="tag">Manual</span><span class="tag">Automated</span><span class="tag">E2E</span><span class="tag">Regression</span></div></div>
-        </div>
-        <div class="service-item reveal reveal-delay-2" data-service="performance">
-          <div class="service-icon"><i data-lucide="activity"></i></div>
-          <div><div class="service-name">Performance Testing</div><div class="service-desc">Load testing, stress testing, soak testing and bottleneck analysis for high-concurrency systems.</div><div class="service-tags"><span class="tag">Load Testing</span><span class="tag">Stress Testing</span><span class="tag">Scalability</span></div></div>
-        </div>
-        <div class="service-item reveal reveal-delay-3" data-service="security">
-          <div class="service-icon"><i data-lucide="lock"></i></div>
-          <div><div class="service-name">Security Testing</div><div class="service-desc">Vulnerability scanning, penetration testing, OWASP Top 10 assessment and security configuration analysis.</div><div class="service-tags"><span class="tag">Pen Testing</span><span class="tag">OWASP</span><span class="tag">Vuln Scan</span></div></div>
-        </div>
-        <div class="service-item reveal reveal-delay-4" data-service="mobile">
-          <div class="service-icon"><i data-lucide="smartphone"></i></div>
-          <div><div class="service-name">Web &amp; Mobile Automation</div><div class="service-desc">Robust automation frameworks for web and native, hybrid, and cross-platform mobile apps.</div><div class="service-tags"><span class="tag">Web</span><span class="tag">iOS</span><span class="tag">Android</span><span class="tag">Hybrid</span></div></div>
-        </div>
-        <div class="service-item reveal reveal-delay-4" data-service="accessibility">
-          <div class="service-icon"><i data-lucide="eye"></i></div>
-          <div><div class="service-name">Accessibility &amp; UX Testing</div><div class="service-desc">WCAG compliance audits, screen reader testing, color contrast analysis and inclusive design validation.</div><div class="service-tags"><span class="tag">WCAG</span><span class="tag">axe</span><span class="tag">UX Audit</span></div></div>
-        </div>
-      </div>
-    </div>
-    <div class="services-visual reveal">
-      <div class="visual-card">
-        <div class="vc-header">
-          <div class="vc-dot"></div><div class="vc-dot"></div><div class="vc-dot"></div>
-          <span class="vc-filename" id="vc-filename">CheckoutTest.java</span>
-        </div>
-        <div class="code-panel active" id="panel-functional">
-<span class="cb-comment">// Selenium + Java — Functional Test</span>
-<span class="cb-keyword">@BeforeEach</span>
-<span class="cb-keyword">void</span> <span class="cb-fn">openCheckout</span>() {
-  driver.<span class="cb-fn">get</span>(<span class="cb-string">"https://app.example.com/cart"</span>);
-  cart.<span class="cb-fn">addProduct</span>(<span class="cb-string">"PTU Course"</span>);
-  cart.<span class="cb-fn">continueToCheckout</span>();
-}
-
-<span class="cb-keyword">@Test</span>
-<span class="cb-keyword">public void</span> <span class="cb-fn">checkoutFlowShouldComplete</span>() {
-  <span class="cb-keyword">new</span> <span class="cb-type">WebDriverWait</span>(driver, <span class="cb-number">10</span>)
-    .until(<span class="cb-fn">visibilityOf</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"cart-summary"</span>)));
-  checkout.<span class="cb-fn">fillCustomer</span>(<span class="cb-string">"qa@sqaadvisory.com"</span>);
-  checkout.<span class="cb-fn">selectPaymentMethod</span>(<span class="cb-string">"credit-card"</span>);
-  driver.<span class="cb-fn">findElement</span>(<span class="cb-type">By</span>.id(<span class="cb-string">"btn-pay"</span>)).<span class="cb-fn">click</span>();
-  <span class="cb-keyword">String</span> msg = confirmation.<span class="cb-fn">bannerText</span>();
-  <span class="cb-fn">assertEquals</span>(<span class="cb-string">"Order confirmed!"</span>, msg);
-  <span class="cb-fn">assertTrue</span>(orders.<span class="cb-fn">latest</span>().<span class="cb-fn">hasInvoice</span>());
-  evidence.<span class="cb-fn">attachScreenshot</span>(<span class="cb-string">"checkout-success"</span>);
-}<span class="cb-cursor"></span>
-        </div>
-        <div class="code-panel" id="panel-performance">
-<span class="cb-comment"># Relampo — Performance Test</span>
-<span class="cb-keyword">scenario</span>: <span class="cb-string">checkout-load-test</span>
-<span class="cb-keyword">config</span>:
-  <span class="cb-keyword">target</span>: <span class="cb-string">https://app.example.com</span>
-  <span class="cb-keyword">duration</span>: <span class="cb-number">300</span>s
-  <span class="cb-keyword">users</span>: <span class="cb-number">500</span>
-  <span class="cb-keyword">ramp_up</span>: <span class="cb-number">60</span>s
-  <span class="cb-keyword">think_time</span>: <span class="cb-string">1s..3s</span>
-  <span class="cb-keyword">regions</span>: [<span class="cb-string">us-east</span>, <span class="cb-string">latam-south</span>]
-<span class="cb-keyword">thresholds</span>:
-  <span class="cb-keyword">http_req_failed</span>: <span class="cb-string">&lt; 1%</span>
-  <span class="cb-keyword">p95</span>: <span class="cb-string">&lt; 800ms</span>
-  <span class="cb-keyword">p99</span>: <span class="cb-string">&lt; 1400ms</span>
-<span class="cb-keyword">steps</span>:
-  - <span class="cb-keyword">name</span>: <span class="cb-string">Browse catalog</span>
-    <span class="cb-keyword">request</span>: <span class="cb-type">GET</span> /api/products
-    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">status</span>: <span class="cb-number">200</span>}
-  - <span class="cb-keyword">name</span>: <span class="cb-string">Add item</span>
-    <span class="cb-keyword">request</span>: <span class="cb-type">POST</span> /api/cart/items
-    <span class="cb-keyword">body</span>: {<span class="cb-keyword">sku</span>: <span class="cb-string">"PTU-101"</span>, <span class="cb-keyword">qty</span>: <span class="cb-number">1</span>}
-  - <span class="cb-keyword">name</span>: <span class="cb-string">Checkout</span>
-    <span class="cb-keyword">request</span>: <span class="cb-type">POST</span> /api/orders
-    <span class="cb-keyword">assert</span>: {<span class="cb-keyword">status</span>: <span class="cb-number">201</span>, <span class="cb-keyword">p95</span>: <span class="cb-number">&lt; 800ms</span>}
-<span class="cb-keyword">outputs</span>:
-  <span class="cb-keyword">report</span>: <span class="cb-string">reports/checkout-load.html</span><span class="cb-cursor"></span>
-        </div>
-        <div class="code-panel" id="panel-security">
-<span class="cb-comment"># OWASP ZAP — Active Scan</span>
-<span class="cb-keyword">zap</span>:
-  <span class="cb-keyword">target</span>: <span class="cb-string">https://app.example.com</span>
-  <span class="cb-keyword">scan_type</span>: <span class="cb-string">active</span>
-  <span class="cb-keyword">auth</span>:
-    <span class="cb-keyword">login_url</span>: <span class="cb-string">/login</span>
-    <span class="cb-keyword">username</span>: <span class="cb-string">${QA_USER}</span>
-    <span class="cb-keyword">password</span>: <span class="cb-string">${QA_PASS}</span>
-  <span class="cb-keyword">context</span>:
-    <span class="cb-keyword">include</span>: [<span class="cb-string">/api/.*</span>, <span class="cb-string">/checkout/.*</span>]
-    <span class="cb-keyword">exclude</span>: [<span class="cb-string">/logout</span>, <span class="cb-string">/billing/live</span>]
-  <span class="cb-keyword">rules</span>: [<span class="cb-string">sql-injection</span>, <span class="cb-string">xss-reflected</span>, <span class="cb-string">csrf-token-missing</span>]
-  <span class="cb-keyword">passive_checks</span>: [<span class="cb-string">headers</span>, <span class="cb-string">cookies</span>, <span class="cb-string">tls</span>]
-  <span class="cb-keyword">report</span>:
-    <span class="cb-keyword">format</span>: <span class="cb-string">html</span>
-    <span class="cb-keyword">fail_on</span>: <span class="cb-string">HIGH</span>
-    <span class="cb-keyword">artifact</span>: <span class="cb-string">security-zap-report.html</span>
-  <span class="cb-keyword">remediation</span>: <span class="cb-string">map findings to OWASP Top 10</span><span class="cb-cursor"></span>
-        </div>
-        <div class="code-panel" id="panel-mobile">
-<span class="cb-comment">// Appium + C# — Mobile Test</span>
-[<span class="cb-type">Test</span>]
-<span class="cb-keyword">public async</span> <span class="cb-type">Task</span> <span class="cb-fn">LoginShouldSucceed</span>() {
-  <span class="cb-keyword">var</span> opts = <span class="cb-keyword">new</span> <span class="cb-type">AppiumOptions</span>();
-  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"platformName"</span>, <span class="cb-string">"iOS"</span>);
-  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"deviceName"</span>, <span class="cb-string">"iPhone 15"</span>);
-  opts.<span class="cb-fn">AddAdditionalCapability</span>(<span class="cb-string">"automationName"</span>, <span class="cb-string">"XCUITest"</span>);
-  <span class="cb-keyword">var</span> driver = <span class="cb-keyword">new</span> <span class="cb-type">IOSDriver</span>(opts);
-  <span class="cb-keyword">var</span> wait = <span class="cb-keyword">new</span> <span class="cb-type">WebDriverWait</span>(driver, <span class="cb-type">TimeSpan</span>.<span class="cb-fn">FromSeconds</span>(<span class="cb-number">12</span>));
-  wait.<span class="cb-fn">Until</span>(d =&gt; d.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"email"</span>))).<span class="cb-fn">SendKeys</span>(<span class="cb-string">"qa@sqaadvisory.com"</span>);
-  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"password"</span>)).<span class="cb-fn">SendKeys</span>(<span class="cb-string">"********"</span>);
-  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">By</span>.<span class="cb-fn">Id</span>(<span class="cb-string">"btnLogin"</span>)).<span class="cb-fn">Click</span>();
-  <span class="cb-fn">Assert</span>.<span class="cb-fn">IsTrue</span>(<span class="cb-fn">IsLoggedIn</span>());
-  driver.<span class="cb-fn">FindElement</span>(<span class="cb-type">MobileBy</span>.<span class="cb-fn">AccessibilityId</span>(<span class="cb-string">"Profile"</span>)).<span class="cb-fn">Click</span>();
-  <span class="cb-fn">Assert</span>.<span class="cb-fn">AreEqual</span>(<span class="cb-string">"QA Advisor"</span>, profile.<span class="cb-fn">DisplayName</span>());
-  await evidence.<span class="cb-fn">AttachDeviceLogs</span>(driver);<span class="cb-cursor"></span>
-}
-        </div>
-        <div class="code-panel" id="panel-accessibility">
-<span class="cb-comment">&lt;!-- axe-core — Accessibility Audit --&gt;</span>
-<span class="cb-keyword">&lt;script&gt;</span>
-  <span class="cb-fn">axe</span>.<span class="cb-fn">run</span>(document, {
-    <span class="cb-keyword">runOnly</span>: [<span class="cb-string">'wcag2a'</span>, <span class="cb-string">'wcag2aa'</span>],
-    <span class="cb-keyword">rules</span>: {
-      <span class="cb-string">'color-contrast'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> },
-      <span class="cb-string">'aria-valid-attr'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> },
-      <span class="cb-string">'label'</span>: { <span class="cb-keyword">enabled</span>: <span class="cb-keyword">true</span> }
-    }
-  }).<span class="cb-fn">then</span>(results =&gt; {
-    <span class="cb-keyword">const</span> serious = results.violations.<span class="cb-fn">filter</span>(v =&gt;
-      [<span class="cb-string">'serious'</span>, <span class="cb-string">'critical'</span>].<span class="cb-fn">includes</span>(v.impact));
-    serious.<span class="cb-fn">forEach</span>(v =&gt; {
-      console.<span class="cb-fn">error</span>(<span class="cb-string">`[${v.impact}]`</span>, v.description);
-      v.nodes.<span class="cb-fn">forEach</span>(node =&gt; console.<span class="cb-fn">warn</span>(node.target));
-    });
-    <span class="cb-keyword">if</span> (serious.length) <span class="cb-keyword">throw new</span> <span class="cb-type">Error</span>(<span class="cb-string">'Accessibility gate failed'</span>);
-  });
-<span class="cb-keyword">&lt;/script&gt;</span><span class="cb-cursor"></span>
-        </div>
-      </div>
-    </div>
+  <div class="services-header reveal">
+    <div class="section-label">Strategic Services</div>
+    <h2 class="section-title">Three service lines. One quality mission.</h2>
+    <p class="section-desc">We help organizations reduce delivery risk, strengthen quality governance, and build sustainable software quality capabilities through independent assurance, expert delivery, and practical enablement.</p>
   </div>
-</section>
-<section id="advisory">
-  <div class="advisory-inner">
-    <div class="advisory-copy reveal">
-      <div class="section-label">Strategic Advisory</div>
-      <h2 class="section-title">Quality Engineering Advisory.</h2>
-      <p class="section-desc">We help organizations build and mature their Software Quality Assurance capabilities through assessment, strategy, implementation, and continuous improvement.</p>
-      <p class="section-desc">Whether your organization is modernizing legacy systems, adopting Agile or DevOps, or expanding digital services, we work alongside your teams to establish sustainable quality practices that reduce risk and improve software delivery.</p>
-      <div class="advisory-badges">
-        <span class="advisory-badge">Assessment</span>
-        <span class="advisory-badge">Strategy</span>
-        <span class="advisory-badge">Governance</span>
-        <span class="advisory-badge">Transformation</span>
+  <div class="service-lines">
+    <article class="service-line-card reveal reveal-delay-1" data-color="cyan">
+      <div class="service-line-icon"><i data-lucide="shield-check"></i></div>
+      <h3 class="service-line-title">Independent Verification &amp; Validation (IV&amp;V)</h3>
+      <p class="service-line-desc">Our flagship consulting service provides independent oversight, quality governance, verification, validation, risk analysis, and executive recommendations across the software delivery lifecycle.</p>
+      <div class="service-line-list">
+        <span>Software Quality &amp; IV&amp;V Assessment</span>
+        <span>Software Quality Maturity Assessment</span>
+        <span>QA Governance</span>
+        <span>Requirements Verification</span>
+        <span>Validation Strategy</span>
+        <span>Release Readiness Assessment</span>
+        <span>Software Quality Roadmaps</span>
+        <span>Risk Assessment</span>
+        <span>Executive Quality Reviews</span>
+        <span>Independent Project Oversight</span>
       </div>
-    </div>
-    <div class="advisory-grid">
-      <div class="advisory-card reveal reveal-delay-1">
-        <div class="advisory-icon"><i data-lucide="clipboard-check"></i></div>
-        <div class="advisory-title">QA Assessments &amp; Maturity Evaluations</div>
-        <p class="advisory-desc">Evaluate current QA processes, tools, governance, and delivery practices to identify risks, gaps, and improvement opportunities.</p>
+      <a class="btn-ghost" href="ivv.html">Learn More</a>
+    </article>
+    <article class="service-line-card reveal reveal-delay-2" data-color="green">
+      <div class="service-line-icon"><i data-lucide="check-circle-2"></i></div>
+      <h3 class="service-line-title">QA &amp; Software Testing Services</h3>
+      <p class="service-line-desc">Execution-focused quality services that validate critical business workflows, improve release confidence, and provide the evidence stakeholders need before deployment.</p>
+      <div class="service-line-list">
+        <span>Functional Testing</span>
+        <span>Test Automation</span>
+        <span>API Testing</span>
+        <span>Mobile Testing</span>
+        <span>Performance Testing</span>
+        <span>Accessibility Testing</span>
+        <span>Security Testing</span>
+        <span>Regression Testing</span>
+        <span>User Acceptance Testing (UAT)</span>
+        <span>Test Management</span>
       </div>
-      <div class="advisory-card reveal reveal-delay-2">
-        <div class="advisory-icon"><i data-lucide="map"></i></div>
-        <div class="advisory-title">QA Strategy &amp; Roadmap</div>
-        <p class="advisory-desc">Define a practical quality roadmap aligned with business goals, standards, KPIs, testing policies, and governance.</p>
+      <a class="btn-ghost" href="qa-testing-services.html">Learn More</a>
+    </article>
+    <article class="service-line-card reveal reveal-delay-3" data-color="purple">
+      <div class="service-line-icon"><i data-lucide="graduation-cap"></i></div>
+      <h3 class="service-line-title">Training &amp; Enablement</h3>
+      <p class="service-line-desc">Professional training, coaching, and mentoring programs designed to strengthen internal quality capabilities, leadership practices, and delivery confidence.</p>
+      <div class="service-line-list">
+        <span>Corporate Training</span>
+        <span>Performance Testing</span>
+        <span>Test Automation</span>
+        <span>API Testing</span>
+        <span>AI for QA</span>
+        <span>QA Leadership</span>
+        <span>Workshops</span>
+        <span>Mentoring</span>
+        <span>Team Enablement</span>
       </div>
-      <div class="advisory-card reveal reveal-delay-3">
-        <div class="advisory-icon"><i data-lucide="workflow"></i></div>
-        <div class="advisory-title">QA Process Implementation</div>
-        <p class="advisory-desc">Integrate quality practices across the SDLC and embed QA into Agile, Scrum, DevOps, and CI/CD workflows.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-4">
-        <div class="advisory-icon"><i data-lucide="refresh-cw"></i></div>
-        <div class="advisory-title">Quality Engineering Transformation</div>
-        <p class="advisory-desc">Move from traditional testing to modern Quality Engineering through automation, collaboration, and continuous quality.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-1">
-        <div class="advisory-icon"><i data-lucide="messages-square"></i></div>
-        <div class="advisory-title">QA Coaching &amp; Advisory</div>
-        <p class="advisory-desc">Mentor QA leaders, managers, and engineering teams while supporting organizational change and adoption of best practices.</p>
-      </div>
-      <div class="advisory-card reveal reveal-delay-2">
-        <div class="advisory-icon"><i data-lucide="building-2"></i></div>
-        <div class="advisory-title">Testing Center of Excellence</div>
-        <p class="advisory-desc">Design and implement QA Centers of Excellence with clear roles, responsibilities, governance, and quality metrics.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="training">
-  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto;">
-    <div class="section-label">Training</div>
-    <h2 class="section-title">We train the best testers.</h2>
-    <p class="section-desc" style="margin:0 auto;">Training programs designed to take your teams to the next level in software quality.</p>
-  </div>
-  <div class="training-grid">
-    <div class="training-card reveal reveal-delay-1">
-      <div class="training-icon"><i data-lucide="monitor"></i></div>
-      <div class="training-title">Web Automation</div>
-      <div class="training-desc">Master Selenium, Cypress and Playwright to build scalable and maintainable automation frameworks.</div>
-      <div class="training-highlights">
-        <div class="highlight-item">Page Object Model</div>
-        <div class="highlight-item">CI/CD Integration</div>
-        <div class="highlight-item">Cross-browser testing</div>
-        <div class="highlight-item">Reporting &amp; metrics</div>
-      </div>
-    </div>
-    <div class="training-card reveal reveal-delay-2">
-      <div class="training-icon"><i data-lucide="smartphone"></i></div>
-      <div class="training-title">Mobile Automation</div>
-      <div class="training-desc">Appium and modern tools for testing native and hybrid iOS and Android applications.</div>
-      <div class="training-highlights">
-        <div class="highlight-item">Appium from scratch</div>
-        <div class="highlight-item">iOS &amp; Android real devices</div>
-        <div class="highlight-item">BrowserStack / LambdaTest</div>
-        <div class="highlight-item">Gestures &amp; biometrics</div>
-      </div>
-    </div>
-    <div class="training-card featured reveal reveal-delay-3">
-      <div class="featured-badge">Featured</div>
-      <div class="training-icon"><i data-lucide="activity"></i></div>
-      <div class="training-title">Performance Testing</div>
-      <div class="training-desc">Official preparation program for the Performance Testing United certification. The only one of its kind.</div>
-      <div class="training-highlights">
-        <div class="highlight-item">JMeter &amp; Relampo</div>
-        <div class="highlight-item">Recording &amp; script correlation</div>
-        <div class="highlight-item">Scripting &amp; parameterization</div>
-        <div class="highlight-item">Local &amp; distributed load</div>
-        <div class="highlight-item">Reports &amp; monitoring</div>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="ptu">
-  <div class="ptu-inner">
-    <div>
-      <div class="ptu-badge-big reveal">Performance Testing United</div>
-      <h2 class="section-title reveal">We created the certification.</h2>
-      <p class="section-desc reveal">SQAAdvisory is the founding organization and official Master Trainer of <strong>Performance Testing United</strong>, the international reference certification in performance testing.</p>
-      <div class="ptu-features">
-        <div class="ptu-feature reveal reveal-delay-1">
-          <div class="ptu-feature-icon"><i data-lucide="trophy"></i></div>
-          <div class="ptu-feature-text"><h4>PTU Founders</h4><p>We designed the curricular standard and internationally recognized evaluation framework.</p></div>
-        </div>
-        <div class="ptu-feature reveal reveal-delay-2">
-          <div class="ptu-feature-icon"><i data-lucide="graduation-cap"></i></div>
-          <div class="ptu-feature-text"><h4>Certified Master Trainers</h4><p>Our instructors are the only ones accredited as PTU Master Trainers.</p></div>
-        </div>
-        <div class="ptu-feature reveal reveal-delay-3">
-          <div class="ptu-feature-icon"><i data-lucide="globe"></i></div>
-          <div class="ptu-feature-text"><h4>International Reach</h4><p>Certified professionals across multiple countries in Latin America and growing.</p></div>
-        </div>
-      </div>
-    </div>
-    <div class="ptu-visual reveal">
-      <div class="ptu-cert-card">
-        <div class="ptu-logo-text">PTU</div>
-        <div class="ptu-sub-text">Performance Testing United</div>
-        <div class="ptu-ribbon">Certified Program</div>
-        <div class="ptu-stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></div>
-        <p style="margin-top:24px;font-size:0.82rem;color:var(--muted);line-height:1.7;">The certification that validates real knowledge in performance testing. Endorsed by industry leaders.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="tools">
-  <div class="reveal" style="max-width:600px;text-align:center;margin:0 auto;">
-    <div class="section-label">Tech Arsenal</div>
-    <h2 class="section-title">The tools we master.</h2>
-    <p class="section-desc" style="margin:0 auto;">We work with the industry-leading technologies for each testing discipline.</p>
-  </div>
-  <div class="tools-cats">
-    <div class="tool-category reveal">
-      <div class="tool-cat-label">Web &amp; E2E Automation</div>
-      <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#43B02A"></span>Selenium</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#17202C"></span>Cypress</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#2EAD33"></span>Playwright</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#e34c26"></span>TestNG</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#25A162"></span>Cucumber</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#C21325"></span>JUnit</div>
-      </div>
-    </div>
-    <div class="tool-category reveal">
-      <div class="tool-cat-label">Mobile Automation</div>
-      <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#6929C4"></span>Appium</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#0DB7ED"></span>BrowserStack</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#FF6D00"></span>LambdaTest</div>
-      </div>
-    </div>
-    <div class="tool-category reveal">
-      <div class="tool-cat-label">Performance Testing</div>
-      <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#E63946"></span>Relampo</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#D22128"></span>JMeter</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#F7A12A"></span>Locust</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#00B4D8"></span>BlazeMeter</div>
-      </div>
-    </div>
-    <div class="tool-category reveal">
-      <div class="tool-cat-label">Security</div>
-      <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#E97627"></span>OWASP ZAP</div>
-      </div>
-    </div>
-    <div class="tool-category reveal">
-      <div class="tool-cat-label">Accessibility</div>
-      <div class="tools-row">
-        <div class="tool-pill"><span class="tool-dot" style="background:#005A9C"></span>axe DevTools</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#1A73E8"></span>Lighthouse</div>
-        <div class="tool-pill"><span class="tool-dot" style="background:#0078D7"></span>WAVE</div>
-      </div>
-    </div>
+      <a class="btn-ghost" href="training-enablement.html">Learn More</a>
+    </article>
   </div>
 </section>
 <section id="trusted">
@@ -663,7 +287,7 @@
     <span class="footer-tagline">Helping elevate software quality from Florida, the Sunshine State.</span>
   </div>
   <div class="footer-links">
-    <a href="#ivv">IV&amp;V</a><a href="#services">Services</a><a href="#training">Training</a><a href="#ptu">PTU</a><a href="#cta">Contact</a>
+    <a href="#services">Services</a><a href="#trusted">Clients</a><a href="#cta">Contact</a>
   </div>
 </footer>
 <script>
@@ -685,17 +309,6 @@
   window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40));
   const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:0.1});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-  const filenames={functional:'CheckoutTest.java',performance:'relampo-test.yaml',security:'zap-scan.yaml',mobile:'LoginTest.cs',accessibility:'accessibility-audit.html'};
-  document.querySelectorAll('.service-item').forEach(item=>{
-    item.addEventListener('click',()=>{
-      const svc=item.dataset.service;
-      document.querySelectorAll('.service-item').forEach(i=>i.classList.remove('active'));
-      document.querySelectorAll('.code-panel').forEach(p=>p.classList.remove('active'));
-      item.classList.add('active');
-      document.getElementById('panel-'+svc).classList.add('active');
-      document.getElementById('vc-filename').textContent=filenames[svc];
-    });
-  });
 </script>
 </body>
 </html>
