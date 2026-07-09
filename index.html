@@ -122,9 +122,11 @@
     .carousel-track{display:flex;gap:32px;width:max-content;animation:carousel-scroll 32s linear infinite}
     .carousel-track:hover{animation-play-state:paused}
     @keyframes carousel-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    .client-card{display:flex;align-items:center;justify-content:center;padding:20px 40px;border:1px solid var(--border);border-radius:var(--radius);background:#ffffff;min-width:220px;height:110px;transition:border-color 0.3s,box-shadow 0.3s}
+    .client-card{display:flex;align-items:center;justify-content:center;padding:12px 24px;border:1px solid var(--border);border-radius:var(--radius);background:#ffffff;min-width:230px;height:118px;transition:border-color 0.3s,box-shadow 0.3s}
     .client-card:hover{border-color:rgba(0,229,255,0.4);box-shadow:0 0 20px rgba(0,229,255,0.1)}
-    .client-card img{max-height:72px;max-width:180px;object-fit:contain}
+    .client-card img{max-height:96px;max-width:215px;object-fit:contain}
+    .client-card img:not(.logo-invert):not(.logo-fit){transform:scale(1.8)}
+    .client-card img.logo-invert{filter:invert(1);transform:scale(0.52)}
     #cta{padding:140px 5%;text-align:center;position:relative;overflow:hidden}
     .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(168,85,247,0.12) 0%,transparent 70%);pointer-events:none}
     .cta-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:20px}
@@ -561,6 +563,9 @@
       <div class="client-card"><img src="clients/8-1.webp" alt="QAlified"></div>
       <div class="client-card"><img src="clients/7-1.webp" alt="Project Management Partners"></div>
       <div class="client-card"><img src="clients/6-1.webp" alt="Aplios"></div>
+      <div class="client-card"><img class="logo-invert" src="clients/invid.png" alt="INVID"></div>
+      <div class="client-card"><img class="logo-invert" src="clients/sd-consult.svg" alt="SD Consult"></div>
+      <div class="client-card"><img class="logo-fit" src="clients/relampo-logo.png" alt="Relampo"></div>
       <div class="client-card"><img src="clients/5-1.webp" alt="argentesting"></div>
       <div class="client-card"><img src="clients/4-1.webp" alt="Garbarino"></div>
       <div class="client-card"><img src="clients/3-1.webp" alt="Travelonux"></div>
@@ -571,6 +576,9 @@
       <div class="client-card"><img src="clients/8-1.webp" alt="QAlified"></div>
       <div class="client-card"><img src="clients/7-1.webp" alt="Project Management Partners"></div>
       <div class="client-card"><img src="clients/6-1.webp" alt="Aplios"></div>
+      <div class="client-card"><img class="logo-invert" src="clients/invid.png" alt="INVID"></div>
+      <div class="client-card"><img class="logo-invert" src="clients/sd-consult.svg" alt="SD Consult"></div>
+      <div class="client-card"><img class="logo-fit" src="clients/relampo-logo.png" alt="Relampo"></div>
     </div>
   </div>
 </section>
